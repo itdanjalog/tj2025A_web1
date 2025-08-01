@@ -1,4 +1,4 @@
-package example.day03._1어노테이션;
+package example.day03_금._1어노테이션;
 
 
 import org.springframework.stereotype.Controller;
