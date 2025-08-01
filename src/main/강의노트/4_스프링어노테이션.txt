@@ -1,7 +1,32 @@
 
+[ REST ] : 웹의 자원을 관리하는 아키텍처/구조
+    1. 자원(Resources) , 행동(Method) , 표현
+    2. HTTP 프로토콜(규약) 이용한 클라이언트 와 서버 간의 일관성 통신 구성
+[ REST API ] : REST 아키텍처에 따른 API
+    1. REST 기반의 웹서비스 인터페이스 구축
+    2. HTTP 요청을 통해 자원(데이터)을 C R U D 할 수 있도록 제공
+[ RESTful API ]
+    1. REST API 의 아키텍처를 잘 사용하는지 대한 개념
+    2. 조건 :
+        1. 일관성 : "/member/XXXX" , "/board/XXXX"
+        2. 적절한 HTTP METHOD : POST(등록) , GET(조회) , PUT(수정) , DELETE(삭제)
+        3. 무상태성
+        4. 응답 타입은 JSON/ XML 제공
+
 1. @SpringBootApplication : 스프링부트 환경 설정
     1) @SpringBootConfiguration : 프로젝트내 @Configuration 어노테이션을 찾아서 bean(객체) 설정/등록 할 수 있도록 설정
     2) @EnableAutoConfiguration : Spring Boot 가 자동으로 필요한 bean(객체)을 설정/등록. 웹서버인 내장형 TomCat 설정
     3) @ComponentScan : **** 현재클래스 기준으로 현 패키지 및 하위 패키지 **** 내 자동으로 컴포넌트(클래스) 들을 스캔해서 등록
         (1) 스캔 대상 : @Component @RestController @Controller @Service @Repository @Mapper 등등 주로 MVC 어노테이션
         (2) 주의할점 : 현재 AppStart 클래스 기준의 상위 패키지는 스캔 안되므로 프로젝트 항상 최상위 폴더에 위치한다.
+
+2. @Component       : bean(객체) 자동으로 생성
+3. @Controller      : HTTP(웹)통신 요청 과 응답 처리 , +@Component
+4. @PostMapping     : HTTP(웹)통신의 METHOD 중에 POST 방식으로 요청 매핑(연결) , 주로 Create
+5. @GetMapping      : HTTP(웹)통신의 METHOD 중에 GET 방식으로 요청 매핑(연결) , 주로 Read
+6. @PutMapping      : HTTP(웹)통신의 METHOD 중에 PUT 방식으로 요청 매핑(연결) , 주로 Put
+7. @DeleteMapping   : HTTP(웹)통신의 METHOD 중에 DELETE 방식으로 요청 매핑(연결) , 주로 DELETE
+    - @XXXXMapping( "/URL정의"): Mapping 어노테이션 (소괄호 안에서 정의할 웹주소(URL)을 baseURL(http://localhost:8080) 뒤로 사용할 주소 정의
+    - @GetMapping("/member")  : "http://localhost:8080/member"
+
+8. @ResponseBody    : HTTP(웹)통신의 요청 처리 이후 응답 반환시 *JAVA 타입에서 주로 JSON 타입으로 자동 변환 *

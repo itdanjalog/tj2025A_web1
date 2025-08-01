@@ -1,0 +1,8 @@
+-- [SPRING WEB] 실습2 : 게시판 RestController 만들기2
+-- [ 제출방법 1 ] 카카오톡방에 ip 제출 ( 강사가 체크 할때 까지 서버 켜주세요 )
+-- [ 제출방법 2 ] 코드가 작성된 파일이 위치한 깃허브 상세 주소를 제출하시오.
+-- [ 요구사항 ]
+    https://docs.google.com/spreadsheets/d/1xEByWi1DLDDdoyxc3KOUhprNqWYk8jwBJAOrDG0Gi_U/edit?usp=sharing
+    1. AppStart 클래스 생성
+    2. BoardController 클래스 생성
+    3. 위 링크에 명세서API 에 따라서 BoardController 코드를 완성
