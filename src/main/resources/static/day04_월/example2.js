@@ -9,44 +9,58 @@ const func1 = ( ) => {
 const func2 = ( ) => {
 	// ** fetch : HTTP 비동기 통신 제공하는 함수
 	// day02의 example1 서블릿 클래스의 doget 메소드 매핑 
-	fetch( `http://localhost:8080/tj2024b_web1/day02/example1` )
+	fetch( "http://localhost:8080/day04/exam1" , { method : 'GET' } )
 } // f end 
 
 const func3 = ( ) => {
 	// POST 메소드 매핑 
-	fetch( `/tj2024b_web1/day02/example1` , { method : 'POST' } )
+	fetch( `/day04/exam1` , { method : 'POST' } )
 } // f end 
 
 const func4 = ( ) => {
-	fetch( `/tj2024b_web1/day02/example1` , { method : 'PUT'} )
+	fetch( `/day04/exam1` , { method : 'PUT'} )
 } // f end 
 
 const func5 = ( ) => {
-	fetch( `/tj2024b_web1/day02/example1` , { method : 'DELETE'} )
+	fetch( `/day04/exam1` , { method : 'DELETE'} )
 } // f end 
+
+
+
+
+
+
+
 
 const func6 = ( ) => {
 	let name = '유재석'; let age = 20;
-	fetch( `/tj2024b_web1/day02/example2?name=${ name }&age=${ age }`)
+	fetch( `/day04/exam2?name=${ name }&age=${ age }`)
 } // f end 
 
 const func7 = ( ) => {
 	let name = '신동엽'; let age = 30;
 	const option = { method : 'POST' }
-	fetch( `/tj2024b_web1/day02/example2?name=${ name }&age=${ age }` , option )
+	fetch( `/day04/exam2?name=${ name }&age=${ age }` , option )
 } // f end 
 
 const func8 = ( ) => {
 	let name = '서장훈'; let age = 10;
 	const option = { method : 'PUT' }
-	fetch( `/tj2024b_web1/day02/example2?name=${ name }&age=${ age }` , option )
+	fetch( `/day04/exam2?name=${ name }&age=${ age }` , option )
 } // f end 
 
 const func9 = ( ) => {
 	let name = "김희철"; let age = 50;
 	const option = { method : 'DELETE'}
-	fetch( `/tj2024b_web1/day02/example2?name=${ name }&age=${ age }` , option )
+	fetch( `/day04/exam2?name=${ name }&age=${ age }` , option )
 } // f end 
+
+
+
+
+
+
+
 
 const func10 =  ( ) => {
 	let object = { data1 : '유재석' , data2 : 50 }
@@ -67,6 +81,14 @@ const func11 = ( ) => {
 	} // o end 
 	fetch( `/tj2024b_web1/day03/example3` , option );
 }// f ned 
+
+
+
+
+
+
+
+
 
 const func12 = ( ) => {
 	const option = { method : 'GET'}
