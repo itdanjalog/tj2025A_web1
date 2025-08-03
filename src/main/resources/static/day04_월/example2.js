@@ -1,9 +1,9 @@
 
 // [1] 람다식 함수 정의
 // const 상수명 = ( ) => { }
-const func1 = ( ) => { 
-	console.log( 'func1 execute' )
-} // f end 
+//const func1 = ( ) => {
+//	console.log( 'func1 execute' )
+//} // f end
 
 // [2] 람다식 함수 정의 안에서 fetch 함수 활용
 const func2 = ( ) => {
@@ -14,15 +14,15 @@ const func2 = ( ) => {
 
 const func3 = ( ) => {
 	// POST 메소드 매핑 
-	fetch( `/day04/exam1` , { method : 'POST' } )
+	fetch( `/day04/exam2` , { method : 'POST' } )
 } // f end 
 
 const func4 = ( ) => {
-	fetch( `/day04/exam1` , { method : 'PUT'} )
+	fetch( `/day04/exam3` , { method : 'PUT'} )
 } // f end 
 
 const func5 = ( ) => {
-	fetch( `/day04/exam1` , { method : 'DELETE'} )
+	fetch( `/day04/exam4` , { method : 'DELETE'} )
 } // f end 
 
 
@@ -34,25 +34,25 @@ const func5 = ( ) => {
 
 const func6 = ( ) => {
 	let name = '유재석'; let age = 20;
-	fetch( `/day04/exam2?name=${ name }&age=${ age }`)
+	fetch( `/day04/exam5?name=${ name }&age=${ age }`)
 } // f end 
 
 const func7 = ( ) => {
 	let name = '신동엽'; let age = 30;
 	const option = { method : 'POST' }
-	fetch( `/day04/exam2?name=${ name }&age=${ age }` , option )
+	fetch( `/day04/exam6?name=${ name }&age=${ age }` , option )
 } // f end 
 
 const func8 = ( ) => {
 	let name = '서장훈'; let age = 10;
 	const option = { method : 'PUT' }
-	fetch( `/day04/exam2?name=${ name }&age=${ age }` , option )
+	fetch( `/day04/exam7?name=${ name }&age=${ age }` , option )
 } // f end 
 
 const func9 = ( ) => {
 	let name = "김희철"; let age = 50;
 	const option = { method : 'DELETE'}
-	fetch( `/day04/exam2?name=${ name }&age=${ age }` , option )
+	fetch( `/day04/exam8?name=${ name }&age=${ age }` , option )
 } // f end 
 
 
@@ -69,7 +69,7 @@ const func10 =  ( ) => {
 		headers : { 'Content-Type' : 'application/json' } ,
 		body : JSON.stringify( object ) // HTTP 통신은 문자열 자료만 전송이 가능하다.
 	 } // o end 
-	fetch( `/tj2024b_web1/day03/example3` , option );
+	fetch( `/day04/exam9` , option );
 } // f end 
 
 const func11 = ( ) => {
@@ -79,7 +79,7 @@ const func11 = ( ) => {
 		headers : { 'Content-Type' : 'application/json'} , 
 		body : JSON.stringify( object )
 	} // o end 
-	fetch( `/tj2024b_web1/day03/example3` , option );
+	fetch( `/day04/exam10` , option );
 }// f ned 
 
 
@@ -92,21 +92,21 @@ const func11 = ( ) => {
 
 const func12 = ( ) => {
 	const option = { method : 'GET'}
-	fetch( `/tj2024b_web1/day03/example5` , option )
+	fetch( `/day04/exam11` , option )
 		.then( response => response.json() )
 		.then( data => { console.log( data ); })
 } // f end 
 
 const func13 = ( ) => {
 	const option = { method : 'POST' }
-	fetch( `/tj2024b_web1/day03/example5` , option )
-		.then( response => response.text() )
+	fetch( `/day04/exam12`  , option )
+		.then( response => response.json() )
 		.then( data => { console.log( data ); } )
 } // f end 
 
 const func14 = ( ) => {
 	const option = { method : 'PUT' }
-	fetch( `/tj2024b_web1/day03/example5` , option )
+	fetch(   `/day04/exam13`  , option )
 		.then( response => response.json() )		// 통신 성공시 
 		.then( data => { console.log( data ); } )	
 		.catch( error => { console.log( error); } )	// 통신 실패시 
@@ -114,7 +114,7 @@ const func14 = ( ) => {
 
 const func15 = ( ) => {
 	const option = { method : 'DELETE' }
-	fetch( `/tj2024b_web1/day03/example5` , option )
+	fetch(  `/day04/exam14`  , option )
 		.then( r => r.json() )
 		.then( data => { console.log(data ); } )
 		.catch( e => { console.log(e); } )

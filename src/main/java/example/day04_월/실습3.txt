@@ -1,0 +1,22 @@
+-- [SPRING WEB] 실습3 : 게시판 RestController 만들기3
+-- [ 제출방법 1 ] 카카오톡방에 실행 중인 서버의 IP 주소를 제출 (강사 확인 시까지 서버 상태를 유지해주세요.)
+-- [ 제출방법 2 ] 코드가 작성된 파일이 위치한 깃허브 상세 주소를 제출하시오.
+-- [ 요구 사항 ] 아래 API 명세서를 참고하여 게시판 CRUD 기능을 구현합니다.
+    · API 명세서: https://docs.google.com/spreadsheets/d/1xEByWi1DLDDdoyxc3KOUhprNqWYk8jwBJAOrDG0Gi_U/edit?usp=sharing
+    1. AppStart 클래스를 생성하여 애플리케이션을 실행합니다.
+    2. BoardController 클래스를 생성합니다.
+        · (중요) 데이터베이스 연동 없이, ArrayList를 사용하여 데이터를 임시로 저장하고 관리합니다.
+    3. BoardDto 클래스를 생성하여 게시물 데이터를 관리합니다.
+    4. API 명세서에 따라 BoardController에 아래 기능들을 JavaScript의 fetch API와 연동하여 완성합니다.
+        · 게시물 등록: 클라이언트(fetch)로부터 게시물 데이터를 전달받아 ArrayList에 저장합니다.
+        · 게시물 전체 조회: ArrayList에 저장된 모든 게시물 목록을 클라이언트에 응답합니다.
+        · 게시물 상세 조회: 클라이언트로부터 특정 게시물 번호를 전달받아 일치하는 데이터를 조회하여 응답합니다.
+        · 게시물 삭제: 클라이언트로부터 특정 게시물 번호를 전달받아 ArrayList에서 해당 데이터를 삭제합니다.
+        · 게시물 수정: 클라이언트로부터 수정할 게시물 번호와 데이터를 전달받아 ArrayList의 해당 데이터를 갱신합니다.
+    5. src/main/resources/static/ 경로에 실습용 HTML 및 JavaScript 파일을 생성합니다.
+    6. 모든 fetch 요청 시 전송하는 데이터는 임의로 지정하며, 서버로부터 받은 응답은 브라우저의 console.log에 출력하여 확인합니다.
+-- [ 샘플 ]
+    @RestController
+    public class BoardController {
+        private ArrayList<BoardDto> boardDb = new ArrayList<>();
+    }
