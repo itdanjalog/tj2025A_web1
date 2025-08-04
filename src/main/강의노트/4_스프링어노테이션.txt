@@ -21,12 +21,33 @@
         (2) 주의할점 : 현재 AppStart 클래스 기준의 상위 패키지는 스캔 안되므로 프로젝트 항상 최상위 폴더에 위치한다.
 
 2. @Component       : bean(객체) 자동으로 생성
-3. @Controller      : HTTP(웹)통신 요청 과 응답 처리 , +@Component
-4. @PostMapping     : HTTP(웹)통신의 METHOD 중에 POST 방식으로 요청 매핑(연결) , 주로 Create
-5. @GetMapping      : HTTP(웹)통신의 METHOD 중에 GET 방식으로 요청 매핑(연결) , 주로 Read
-6. @PutMapping      : HTTP(웹)통신의 METHOD 중에 PUT 방식으로 요청 매핑(연결) , 주로 Put
-7. @DeleteMapping   : HTTP(웹)통신의 METHOD 중에 DELETE 방식으로 요청 매핑(연결) , 주로 DELETE
-    - @XXXXMapping( "/URL정의"): Mapping 어노테이션 (소괄호 안에서 정의할 웹주소(URL)을 baseURL(http://localhost:8080) 뒤로 사용할 주소 정의
-    - @GetMapping("/member")  : "http://localhost:8080/member"
+3. @Controller      : HTTP(웹)통신 요청 과 응답(view) 처리 , + @Component
+4. @RestController  : HTTP(웹)통신 요청 과 응답(json) 처리 , + @Controller + @ResponseBody
+5. @PostMapping     : HTTP(웹)통신의 METHOD 중에 POST 방식으로 요청 매핑(연결) , 주로 Create
+6. @GetMapping      : HTTP(웹)통신의 METHOD 중에 GET 방식으로 요청 매핑(연결) , 주로 Read
+7. @PutMapping      : HTTP(웹)통신의 METHOD 중에 PUT 방식으로 요청 매핑(연결) , 주로 Put
+8. @DeleteMapping   : HTTP(웹)통신의 METHOD 중에 DELETE 방식으로 요청 매핑(연결) , 주로 DELETE
+   - @XXXXMapping( "/URL정의"): Mapping 어노테이션 (소괄호 안에서 정의할 웹주소(URL)을 baseURL(http://localhost:8080) 뒤로 사용할 주소 정의
+   - @GetMapping("/member")  : "http://localhost:8080/member"
+9. @ResponseBody        : HTTP(웹)통신의 요청 처리 이후 응답 반환시 *JAVA 타입에서 주로 JSON 타입으로 자동 변환 *
+10. @RequestParam       : 쿼리스트링, GET/DELETE , 단일 매개변수   , int/String/List/Map
+11. @ModelAttribute     : 쿼리스트링, GET/DELETE , 복수 매개변수   , DTO/VO
+12. @RequestBody        : HTTP본문 , POST/PUT   , 본문 객체(JSON) , DTO/Map/List
 
-8. @ResponseBody    : HTTP(웹)통신의 요청 처리 이후 응답 반환시 *JAVA 타입에서 주로 JSON 타입으로 자동 변환 *
+[ HTTP 자료 포함 ]
+    방법1. 쿼리스트링  ? URL 경로상의 매개변수 표현 , get/post/put/delete method 표현 , 매개변수 노출O
+        예] http://localhost:8080/board ? mname = 유재석 & age = 10
+    방법2. BODY(본문) ? HTTP BODY(본문)에 매개변수 표현 , post/put method 표현 , 매개변수 노출X
+        예] http://localhost:8080
+        F12[개발자도구] -> [네트워크] -> 지정 통신명 -> [페이로드]
+
+
+
+
+
+
+
+
+
+
+
