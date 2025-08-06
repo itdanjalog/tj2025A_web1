@@ -8,7 +8,31 @@
     2. 지원확장자 : .html .js .css .jpg 등등 , 주로 정적파일이다.
 
 [ Spring 동적파일 ]
-    -> Spring 프로젝트내 JSP(JAVA+HTML:MVC1) / *타임리프* / 머스테치 / REACT(JS+HTML:MVC2) 등등 파일
+    -> Spring 프로젝트내 JSP / *타임리프* / 머스테치 / REACT 등등 파일
+        JSP 란 ? .jsp 파일내 java 와 html 코드를 모두 작성 가능한 확장자 : MVC1패턴(controller+view)
+            -> 강의기준은 .jsp 파일 사용하되 특정기능만 사용, MVC2패턴( controller , view 분리 )
     -> 정적파일은 코드 그자체로 브라우저 해석(렌더링)  VS
     -> 동적파일은 코드 그자체로 브라우저 해석(렌더링)불가능, 각 프로그래밍언언어들 렌더링
+
+[ Spring 과 JSP 통합 ]
+    1. 문제점 : Spring 회사는 공식적인 JSP 지원하지 않는다.
+    2. 설치방법 : 그레이들 환경
+        1) build.gradle 파일내 jsp 의존성(dependencies) 추가 -> ctrl+shift+O(새로고침)
+            implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
+        2) 패키지 구성
+            1. ( src -> main -> webapp 폴더 생성 )
+            2. webapp 폴더내 .jsp 파일 생성
+                * 파일내 HTML 또는 JSP 코드 작성 , 인텔리제이 무료버전 자동완성 X -> VSCODE
+            3. 모든 .jsp 파일 상단에 jsp 설정코드
+                <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+            * localhost:8080/(webapp)이하 경로 로 URL 정의된다.
+            -> http://localhost:8080/test.jsp
+
+
+
+
+
+
+
+
 
