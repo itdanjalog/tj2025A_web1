@@ -23,6 +23,10 @@
 2. @Component       : bean(객체) 자동으로 생성
 3. @Controller      : HTTP(웹)통신 요청 과 응답(view) 처리 , + @Component
 4. @RestController  : HTTP(웹)통신 요청 과 응답(json) 처리 , + @Controller + @ResponseBody
+3. @RequestMapping  : HTTP 요청 URL 매핑 ( 주로 공통 URL 정의 할때 클래스 위에서 사용한다. )
+
+3. @RequestMapping  : HTTP 요청 URL 매핑 ( 주로 공통 URL 정의 할때 클래스 위에서 사용한다. )
+
 5. @PostMapping     : HTTP(웹)통신의 METHOD 중에 POST 방식으로 요청 매핑(연결) , 주로 Create
 6. @GetMapping      : HTTP(웹)통신의 METHOD 중에 GET 방식으로 요청 매핑(연결) , 주로 Read
 7. @PutMapping      : HTTP(웹)통신의 METHOD 중에 PUT 방식으로 요청 매핑(연결) , 주로 Put
