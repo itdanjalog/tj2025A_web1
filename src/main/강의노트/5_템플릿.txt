@@ -20,13 +20,17 @@
         1) build.gradle 파일내 jsp 의존성(dependencies) 추가 -> ctrl+shift+O(새로고침)
             implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
         2) 패키지 구성
-            1. ( src -> main -> webapp 폴더 생성 )
+            1. 프로젝트 폴더내 ( src -> main -> webapp 폴더 생성 )
             2. webapp 폴더내 .jsp 파일 생성
                 * 파일내 HTML 또는 JSP 코드 작성 , 인텔리제이 무료버전 자동완성 X -> VSCODE
             3. 모든 .jsp 파일 상단에 jsp 설정코드
                 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             * localhost:8080/(webapp)이하 경로 로 URL 정의된다.
             -> http://localhost:8080/test.jsp
+
+        4) 다른 .jsp 파일 불러오기 , 헤더/푸터 페이지 사용된다.
+            <jsp:include page="/.jsp경로"></jsp:include>
+            * 주의할점 : 마크업간의 공백/띄어쓰기 사용하지 않기
 
 
 
