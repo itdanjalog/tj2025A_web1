@@ -1,0 +1,5 @@
+-- [SPRING WEB] 실습3 식당 대기번호 프로그램
+-- [ 제출방법 1 ] 카카오톡방에 ip 제출 ( 강사가 체크 할때 까지 서버 켜주세요 )
+-- [ 제출방법 2 ] 코드가 작성된 파일이 위치한 깃허브 상세 주소를 제출하시오.
+-- [ 요구사항 ]
+    https://docs.google.com/spreadsheets/d/1dObPeOeWWHjZCxW_oLvcl-Se8Vi3YZbFnNj4KP1bfqA/edit?usp=sharing
