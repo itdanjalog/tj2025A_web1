@@ -33,10 +33,17 @@
 8. @DeleteMapping   : HTTP(웹)통신의 METHOD 중에 DELETE 방식으로 요청 매핑(연결) , 주로 DELETE
    - @XXXXMapping( "/URL정의"): Mapping 어노테이션 (소괄호 안에서 정의할 웹주소(URL)을 baseURL(http://localhost:8080) 뒤로 사용할 주소 정의
    - @GetMapping("/member")  : "http://localhost:8080/member"
-9. @ResponseBody        : HTTP(웹)통신의 요청 처리 이후 응답 반환시 *JAVA 타입에서 주로 JSON 타입으로 자동 변환 *
-10. @RequestParam       : 쿼리스트링, GET/DELETE , 단일 매개변수   , int/String/List/Map
-11. @ModelAttribute     : 쿼리스트링, GET/DELETE , 복수 매개변수   , DTO/VO
-12. @RequestBody        : HTTP본문 , POST/PUT   , 본문 객체(JSON) , DTO/Map/List
+
+9. @RequestMapping  : HTTP (웹)통신의 주로 class 요청 매핑 , 즉] 공통 URL 정의
+    - @RequestMapping("/member")
+      class Controller{
+        @GetMapping("/find")    <------ "/member/find"
+      }
+
+10. @ResponseBody        : HTTP(웹)통신의 요청 처리 이후 응답 반환시 *JAVA 타입에서 주로 JSON 타입으로 자동 변환 *
+11. @RequestParam       : 쿼리스트링, GET/DELETE , 단일 매개변수   , int/String/List/Map
+12. @ModelAttribute     : 쿼리스트링, GET/DELETE , 복수 매개변수   , DTO/VO
+13. @RequestBody        : HTTP본문 , POST/PUT   , 본문 객체(JSON) , DTO/Map/List
 
 [ HTTP 자료 포함 ]
     방법1. 쿼리스트링  ? URL 경로상의 매개변수 표현 , get/post/put/delete method 표현 , 매개변수 노출O

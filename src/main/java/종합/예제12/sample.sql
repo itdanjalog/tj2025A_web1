@@ -3,13 +3,13 @@ create database exam12;
 use exam12;
 
 create table board(
-        bno int auto_increment ,
+        bno int auto_increment , 
     bcontent longtext not null ,
     bwriter varchar(30) not null ,
     constraint primary key(bno)
 );
 
-# 샘플
+# 샘플 
 INSERT INTO board (bcontent, bwriter) VALUES ('안녕하세요', '유재석');
 INSERT INTO board (bcontent, bwriter) VALUES ('오늘도 좋은 하루 되세요!', '김태호');
 INSERT INTO board (bcontent, bwriter) VALUES ('점심 뭐 드셨나요?', '박명수');
