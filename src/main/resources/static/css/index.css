@@ -1,0 +1,38 @@
+/* header logo */
+.header_logo{	width: 60px; }
+/* 눈누 폰트 */
+@font-face {
+    font-family: 'yg-jalnan';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+/* 전체 폰트적용 */
+*{ font-family: 'yg-jalnan'; }
+/* header member profile */
+.header_profile{
+	width: 70px; height: 70px; /* 가로사이즈 세로사이즈 = 고정 크기일때 사이즈 비율 깨짐. */
+	border-radius: 40px; /* 둥근모서리 */
+	padding: 2px ; /* 안쪽 여백 */
+	border : 1px solid #e8e8e8; /* 테두리 */
+	/* 사진의 사이즈 비율 맞춤 */
+    /* object-fit: contain; 자동 원본 비율 맞춤 */
+    /* object-fit: none;  사이즈 고정 */
+    object-fit: cover; /* 비율 유지 , 사이즈 잘림 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
