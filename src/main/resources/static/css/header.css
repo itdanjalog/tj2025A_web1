@@ -1,0 +1,13 @@
+li{ list-style: none;}
+a{ text-decoration: none;}
+
+#header{
+    display: flex;
+    justify-content: space-between;
+}
+#header > #sub-menu{   display: flex; }
+#header > #sub-menu > li{ margin-left: 10px; }
+#header > #sub-menu img{ width : 50px;}
+
+#header > #log-menu{ display: flex; }
+#header > #log-menu > li{ margin-left: 10px; }

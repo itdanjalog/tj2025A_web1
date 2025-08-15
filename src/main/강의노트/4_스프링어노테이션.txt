@@ -16,8 +16,8 @@
 1. @SpringBootApplication : 스프링부트 환경 설정
     1) @SpringBootConfiguration : 프로젝트내 @Configuration 어노테이션을 찾아서 bean(객체) 설정/등록 할 수 있도록 설정
     2) @EnableAutoConfiguration : Spring Boot 가 자동으로 필요한 bean(객체)을 설정/등록. 웹서버인 내장형 TomCat 설정
-    3) @ComponentScan : **** 현재클래스 기준으로 현 패키지 및 하위 패키지 **** 내 자동으로 컴포넌트(클래스) 들을 스캔해서 등록
-        (1) 스캔 대상 : @Component @RestController @Controller @Service @Repository @Mapper 등등 주로 MVC 어노테이션
+    3) @ComponentScan : **** 현재클래스 기준으로 현 패키지 및 하위 패키지 **** 내 자동으로 컴포넌트(클래스) 들을 스캔해서 *스프링컨테이너*등록
+        (1) 스캔 대상 : @Component @RestController @Controller @Service @Repository 등등 주로 MVC 어노테이션
         (2) 주의할점 : 현재 AppStart 클래스 기준의 상위 패키지는 스캔 안되므로 프로젝트 항상 최상위 폴더에 위치한다.
 
 2. @Component       : bean(객체) 자동으로 생성

@@ -1,57 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language = "java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-	<link href="/css/member/info.css" rel="stylesheet">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' href='/css/member/info.css'>
 </head>
 <body>
-	<jsp:include page="/header.jsp"></jsp:include>
-	
-	<div class="container col-xl-10 col-xxl-8 px-4 py-5">
-	  <div class="row align-items-center g-lg-5 py-5">
-	    <!-- 오른쪽 회원가입 입력 구역  -->
-	    <div class="col-md-10 mx-auto col-lg-5">
-	      <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
-			<div class="form-floating mb-3 mimgbox">
-	          <img src="" class="mimg" />
-	        </div>
-	        <div class="form-floating mb-3">
-	          <input type="text" readonly name="mid" class="form-control mid" id="floatingInput1" placeholder="계정아이디">
-	          <label for="floatingInput1">계정아이디</label>
-	        </div>
-	        <div class="form-floating mb-3">
-	          <input type="text" readonly name="mname" class="form-control mname" id="floatingInput4" placeholder="닉네임">
-	          <label for="floatingInput4">닉네임</label>
-	        </div>
-	       	<div class="form-floating mb-3">
-	          <input type="text" readonly name="mphone" class="form-control mphone" id="floatingInput5" placeholder="이메일">
-	          <label for="floatingInput5">연락처</label>
-	        </div>
-	        <button class="w-100 btn btn-lg btn-primary" type="button" onclick="onUpdate()"> 회원 수정 </button>
-	        <hr class="my-4">
-	        <button class="w-100 btn btn-lg btn-primary" type="button" onclick="onDelete()"> 회원 탈퇴 </button>
-	      </form>
-	    </div>
-	  </div>
-	  <div class="row align-items-center g-lg-5 py-5">
-	  		    <div class="col-md-10 mx-auto col-lg-5">
-	    	<table class="table">
-	    		<thead>
-	    			<tr>
-	    				<th> # </th> <th> 내역 </th> <th> 수량 </th> <th> 변경일 </th>
-	    			</tr>
-	    		</thead>
-	    		<tbody>
-	    			
-	    		</tbody>
-	    	</table>
-	    </div>
-	  </div>
-	</div>
-  	<script src="/js/member/info.js"></script>
+
+    <jsp:include page="/header.jsp"></jsp:include>
+    
+    <div id="container">
+        <h3> 마이페이지 </h3>
+        <div> 회원번호 : <span class="mno"> </span> </div>
+        <div> 아이디 :  <span class="mid"> </span></div>  
+        <div> 이름 :  <span class="mname"> </span></div>  
+        <div> 연락처 :  <span class="mphone"> </span></div>  
+        <div> 가입일 :  <span class="mdate">  </span></div>
+        <a href="/member/update.jsp"> 회원정보 수정 </a> <br/>
+        <a href="/member/pwdupdate.jsp"> 비밀번호 수정 </a> <br/>
+        <a href="#" onclick="onDelete()"> 회원 탈퇴 </a>  <br/>
+    </div>
+    <script src="/js/member/info.js"></script>
 </body>
 </html>
-

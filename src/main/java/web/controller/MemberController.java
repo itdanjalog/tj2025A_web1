@@ -13,134 +13,135 @@ import java.util.Map;
 @RequestMapping("/member")
 public class MemberController {
 
-    @Autowired private MemberService memberService;
+    @Autowired
+    private MemberService memberService;
 
     // [1] 회원가입
-    // [POST] http://localhost:8080/member/signup
-    // Content-Type : application/json
-    // body : { "mid" : "qwe" , "mpwd":"1234" , "mname":"유재석" , "mphone" : "010-0000-0000" }
-    //  vs
-    // Content-Type : multipart/form-data
     @PostMapping("/signup")
-    //public boolean sigunUp( @RequestBody MemberDto memberDto  ){ // JSON 사용시 @RequestBody명시
-    public int sigunUp( @RequestBody MemberDto memberDto  ){ // multipart/form-data 사용시 @RequestBody생략
-        System.out.println("MemberController.sigunUp");
-        System.out.println("memberDto = " + memberDto);
-        //return false;
-        int result = memberService.sigunUp( memberDto );
-        System.out.println("result = " + result);
+    public int signUp(@RequestBody MemberDto memberDto ){
+        int result = memberService.signUp( memberDto );
         return result;
     }
 
-    // [2] 로그인 + 세션 생성 (서버내 저장소 = 주로 로그인된 회원정보 ) :  HttpServletRequest req
+    // [2] 로그인
     @PostMapping("/login")
-    //  [POST]  http://localhost:8080/member/login
-    // Content-Type : application/json
-    // body : { "mid" : "qwe" , "mpwd":"1234" }
-    public int login(@RequestBody MemberDto memberDto , HttpServletRequest req ){
-        System.out.println("MemberController.login");
-        System.out.println("memberDto = " + memberDto);
+    public int login (@RequestBody MemberDto memberDto,
+                      HttpServletRequest request ){
+        // 1. 세션 정보 가져오기
+        HttpSession session = request.getSession();
+        // 2. 로그인 성공한 회원번호 확인
         int result = memberService.login( memberDto );
-        if( result != 0 ){
-            HttpSession session = req.getSession(); // - 세션 호출
-            session.setAttribute("loginMno" , result ); // 세션 객체내 새로운 속성 추가 , 로그인성공한 결과를 'loginDto' 라는 이름으로 저장.
-            session.setMaxInactiveInterval( 60 * 10 ); // 세션 유지 시간[초] : 60*10 => 10분
-        }  // else end
-        return result; // 로그인 성공처리
-    } // f end
-
-
-    // [3] 로그인 상태 확인 , 내정보보기(마이페이지)
-    // [GET] http://localhost:8080/member/info
-    @GetMapping("/info")
-    public MemberDto info( HttpServletRequest request ){
-        HttpSession session = request.getSession();// 1. 세션호출
-        if( session == null  || session.getAttribute("loginMno") == null ) return null; // 2. 만약에 세션이 존재하지 않으면 null 반환
-        Object object = session.getAttribute("loginMno"); // 3. 로그인 성공시 저장한 loginDto 의 로그인정보를 꺼낸다.
-        int loginMno = (int)object; // 4. 세션에 저장된 자료들은 모두 Object 타입 이므로 타입변환한다.
-
-        MemberDto memberDto = memberService.info( loginMno );
-
-        return memberDto; // 5. 로그인된 정보 반환
+        if( result > 0 ){
+            // 3. 세션 정보에 속성 추가하기.
+            session.setAttribute("loginMno" , result ); // 속성값은 자동타입변환으로 Object 타입
+        }
+        // 4. 반환
+        return result;
     }
 
-
-    // [4] 로그아웃 + 세션 삭제
-    // [GET] http://localhost:8080/member/logout
+    // [3] 로그아웃 , *세션은 서버를 재시작 하면 초기화*
     @GetMapping("/logout")
     public boolean logout( HttpServletRequest request ){
-        HttpSession session = request.getSession();// 1. 세션 호출
-        if( session == null  || session.getAttribute("loginMno") == null ) return false;
-        //session.invalidate(); // 2. 세션내 전체 속성 초기화 한다.
-        session.removeAttribute("loginMno"); // 2. 세션내 특정 속성만 초기화 한다.
-        return true;
-    } // f end
-
-    // [A] 아이디 중복 검사 -> 중복검사 로 호환
-    // [GET] http://localhost:8080/member/checkid?mid=sample
-    // 2025-08-13
-    @GetMapping("/checkid")
-    public boolean checkId(@RequestParam String mid , @RequestParam String type ) {
-        return memberService.checkId(mid , type ); // true=이미 존재 / false=사용 가능
-    }
-
-
-    // [U] 회원수정 (이름/연락처)
-    // [PUT] http://localhost:8080/member
-    // Body(JSON): { "mname": "새이름", "mphone": "010-1234-5678" }
-    // 2025-08-13
-    @PutMapping
-    public boolean updateMember(@RequestBody MemberDto body, HttpServletRequest request) {
+        // 1. 요청 객체내 세션 정보 꺼내기
         HttpSession session = request.getSession();
-        if (session == null || session.getAttribute("loginMno") == null) return false;
-
-        int loginMno = (int) session.getAttribute("loginMno");
-
-        // 세션의 회원번호로 강제 매핑하여 본인만 수정 가능
-        MemberDto dto = new MemberDto();
-        dto.setMno(loginMno);
-        dto.setMname(body.getMname());
-        dto.setMphone(body.getMphone());
-
-        return memberService.updateMember(dto);
-    }
-
-    // [D] 회원탈퇴 (본인)
-    // [DELETE] http://localhost:8080/member
-    // 2025-08-13
-    @DeleteMapping
-    public boolean deleteMember(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        if (session == null || session.getAttribute("loginMno") == null) return false;
-
-        int loginMno = (int) session.getAttribute("loginMno");
-        boolean ok = memberService.deleteMember(loginMno);
-
-        // 성공 시 세션 정리
-        if (ok) {
-            session.removeAttribute("loginMno");
+        // 2. 만약에 세션이 없거나 특정한 속성값이 없으면 ( 유효성검사 ) 비로그인상태
+        if( session == null || session.getAttribute("loginMno")== null ){
+            return false; // 비로그인상태; // 로그아웃 실패
         }
-        return ok;
+        // 3. 로그인상태이면 속성값 제거하기
+        session.removeAttribute("loginMno");
+        return true; // 로그아웃 성공
     }
 
-    // [P] 비밀번호 변경 (본인만)
-    // [PUT] http://localhost:8080/member/password
-    // Body(JSON): { "currentPwd": "1234", "newPwd": "abcd1234" }
-    // 2025-08-13
-    @PutMapping("/password")
-    public boolean changePassword(@RequestBody Map<String, String> body, HttpServletRequest request) {
+    // [4] 회원정보 조회
+    @GetMapping("/info")
+    public MemberDto info( HttpServletRequest request ){
+        // 1. HttpServletRequest(요청정보)객체 에서 세션 객체 꺼내기
         HttpSession session = request.getSession();
-        if (session == null || session.getAttribute("loginMno") == null) return false;
+        // 2. 만약에 비어있으면 비로그인상태
+        if( session == null || session.getAttribute("loginMno") == null ){   return null;   }
+        // 3. 로그인상태이면 세션 정보내 로그인상태 속성값 호출
+        Object obj = session.getAttribute("loginMno"); // 로그인시 정의 속성명과 동일하게 작성
+        // Object타입은 자바의 최상위 클래스로써 모든 자료를 저장한다. 세션은 Object 타입으로 저장한다.
+        // 즉] 세션은 모든 타입의 자료를 저장할 수 있다.
+        // 4. 타입변환 , 강제타입변환이란?  (변환할타입명)변수명; , **태생!!** : Object 가 되기전에 타입 확인? int
+        int loginMno = (int)obj;
+        // 5. 서비스에게 전달하고 응답받기
+        MemberDto result  = memberService.info( loginMno );
+        return result;
+    }
 
-        int loginMno = (int) session.getAttribute("loginMno");
-        String currentPwd = body.get("currentPwd");
-        String newPwd = body.get("newPwd");
+    // [5] 특정한 필드/열/컬럼 의 값 중복/존재 확인
+    @GetMapping("/check")
+    public boolean check( @RequestParam String type , @RequestParam String data ){
+        boolean result = memberService.check( type , data );
+        return result;
+    }
 
-        if (currentPwd == null || newPwd == null || newPwd.isBlank()) return false;
+    // [6] 회원정보 수정
+    @PutMapping("/update")
+    public boolean update( @RequestBody MemberDto memberDto , HttpServletRequest request ){
+        // 1. 세션 객체 꺼내기
+        HttpSession session = request.getSession();
+        // 2. 만약에 세션이 없다면 비로그인상태 : *수정 불가능*
+        if( session == null || session.getAttribute("loginMno") == null ){
+            return false;
+        }
+        // 3. 로그인된 회원번호 꺼내기 = 수정하는 회원의 번호
+        Object obj = session.getAttribute("loginMno");
+        int loginMno = (int)obj;
+        // 4. dto 담아주기
+        memberDto.setMno( loginMno );
+        // 5. 서비스에게 전달후 응답받기
+        boolean result = memberService.update( memberDto );
+        return result;
+    }
 
-        return memberService.changePassword(loginMno, currentPwd, newPwd);
+    // [7] 회원비밀번호수정
+    @PutMapping("/update/password")
+    public boolean updatePassword( @RequestBody Map<String,String> map , HttpServletRequest request ){
+        HttpSession session = request.getSession();                                     // 1.
+        if( session == null || session.getAttribute("loginMno")==null ) return false;   // 2.
+        Object obj = session.getAttribute("loginMno");                                  // 3.
+        int loginMno = (int)obj;
+        boolean result = memberService.updatePassword( loginMno , map );                // 4.
+        // --
+        if( result == true )  session.removeAttribute("loginMno");
+        return result;
+    }
+
+    // [8] 회원탈퇴
+    @DeleteMapping("/delete")
+    public boolean delete( @RequestParam String oldpwd , HttpSession session ){
+        // 1.매개변수로 받은 요청정보내 세션객체를 확인 해서 없으면 비로그인상태
+        if( session == null || session.getAttribute("loginMno") == null )return false;
+        // 2.
+        int loginMno = (int)session.getAttribute("loginMno");
+        // 3.
+        boolean result  = memberService.delete( loginMno , oldpwd );
+        //
+        if( result == true )  session.removeAttribute("loginMno");
+        return result;
     }
 
 
 
-}
+
+
+} // class end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

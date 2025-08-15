@@ -1,0 +1,43 @@
+[ Apache Tomcat ]
+    1. 정의 : *자바 기반의 웹 프로그램(애플리케이션)
+    2. 주로 JSP 와 서블릿 기반
+    * Spring boot 환경에 내장된 웹서버 *
+
+[ Servlet ]
+    1. 정의 : *자바 기반의 동적 웹 페이지를 만들기 위한 클래스
+    2. 역할 : HTTP 요청(request)을 받고 HTTP 응답(response)으로 준다.
+    3. 사용처 : HttpServletRequest 클래스 , HttpServletResponse 클래스
+    4. 환경 : 톰캣 서버내 서블릿 컨테이너(메모리) 존재한다.
+    * Spring web 환경에서 @RequestMapping @ResponseBody 등등
+
+[ 톰캣 세션 ] * 세션이라는 용어는 여러곳에서 사용된다.
+    1. 정의 : 톰캣 서버내 데이터를 저장하고 관리할 수 있게 *메모리* 제공
+    2. 목적 : 1.상태(데이터)관리 2.인증/권한 3.효율적인 데이터 관리
+    3. 주 사용처 :
+        1. 로그인 상태
+        2. (비회원제) 장바구니/세션 VS (회원제)장바구니/DB
+        3. 자동로그인, 테마 등등 사용자의 설정값
+        4. 실시간 처리 , 웹게임
+        등등 == 실무에서는 세션에 과부화에 따른 고민!!
+    4. 특징 : 브라우저(크롬/엣지/사파리 등) 마다 ** 별도의 세션 객체 ** 가 할당 된다.
+        예] 크롬에서 장바구니를 담으면 엣지 에서는 보이지 않는다.
+
+[ HttpServletRequest ] : 요청 정보 객체
+    1. 주요 메소드
+        1) .getRemoteAddr()         : 요청자(클라이언트/사용자) 의 IP 주소 반환
+        2) .getRemotePort()         : 요청자(클라이언트/사용자) 의 PORT 확인 반환
+        3) .getHeader("User-Agent") : 요청자(클라이언트/사용자) 의 프로그램(크롬/엣지/사파리) 정보 확인 반환
+        4) .getSession()            : 톰캣(서버) 내 세션(메모리/HttpSession)객체를 반환
+
+[ HttpSession ] : 세션 정보 객체
+    1. 주요 메소드
+        1) .setAttribute( "속성명" , 속성값 )     : 세션내 속성 추가, 속성명은 String 타입, 속성값은 자동으로 Object 자동타입변환
+        2) .getAttribute( "속성명" )             : 세션내 속성값 호출, 속성값은 타입은 Object 타입이므로, 타입변환 필수!!
+        3) .removeAttribute( "속성명" )          : 세션내 *특정 속성 제거
+        4) .invalidate( )                       : 세션내 *모든 속성 제거
+        5) .getId()                             : 세션 식별번호 *브라우저 마다 할당/사용자의 개인 저장소 활용* , 공유 안됨
+        6) .getCreationTime()                   : 세션 생성 시간(ms)
+        7) .getLastAccessedTime()               : 세션 마지막 접근 시간(ms)
+        8) .getMaxInactiveInterval()            : 세션 최대 유효 시간 확인(s)
+        9) .setMaxInactiveInterval( 초 )         : 세션 최대 유효 시간 설정(s) , 1시간 : 60*60 , 24시간 : 60*60*24
+        10) .getAttributeNames()                : 세션내 모든 속성명 반환

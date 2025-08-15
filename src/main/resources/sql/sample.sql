@@ -8,7 +8,7 @@ CREATE TABLE member (
     mid     VARCHAR(50) NOT NULL UNIQUE,           -- 회원 아이디
     mpwd    VARCHAR(50) NOT NULL,                  -- 비밀번호
     mname   VARCHAR(30) NOT NULL,                  -- 회원 이름
-    mphone  VARCHAR(13) NOT NULL,                  -- 회원 연락처
+    mphone  VARCHAR(13) UNIQUE NOT NULL,                  -- 회원 연락처
     mdate   DATETIME DEFAULT NOW(),                 -- 가입일
     CONSTRAINT PRIMARY KEY (mno)
 );
@@ -21,3 +21,5 @@ INSERT INTO member (mid, mpwd, mname, mphone, mdate) VALUES
 ('leepeace', 'abcd1111', '이평화', '010-2222-3333', '2025-08-03 17:45:00'),
 ('parkjoy',  'pass9999', '박기쁨', '010-5555-6666', '2025-08-04 08:05:00'),
 ('choifit',  'fit2025',  '최건강', '010-7777-8888', '2025-08-05 19:30:00');
+
+SELECT * FROM member;

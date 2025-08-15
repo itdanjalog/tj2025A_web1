@@ -5,62 +5,65 @@ import org.springframework.stereotype.Service;
 import web.model.dao.MemberDao;
 import web.model.dto.MemberDto;
 
-@Service
+import java.util.Map;
+
+@Service // 스프링 컨테이너(메모리) 빈(객체) 등록
 public class MemberService {
 
-    @Autowired private MemberDao memberDao;
-
+    @Autowired // 스프링 컨테이너(메모리)에 등록된 빈 주입(꺼내) 받기
+    private MemberDao memberDao;
 
     // [1] 회원가입
-    public int sigunUp( MemberDto memberDto ){
-        System.out.println("MemberService.sigunUp");
-        System.out.println("memberDto = " + memberDto);
-        int result = memberDao.sigunUp(memberDto);
-        System.out.println("result = " + result);
+    public int signUp(MemberDto memberDto ){
+        int result = memberDao.signUp( memberDto );
         return result;
-    }
+    } // func end
 
     // [2] 로그인
-    public int login( MemberDto memberDto ){
-        System.out.println("MemberService.login");
-        System.out.println("memberDto = " + memberDto);
-        // (4) 로그인에서 입력한 아이디와 비밀번호가 모두 일치하면 회원정보 가져오기
-        int result = memberDao.login(  memberDto );
+    public int login ( MemberDto memberDto ){
+        int result = memberDao.login( memberDto );
         return result;
     }
 
-    // [2] 로그인
-    public MemberDto info( int loginMno ) {
-        // (4) 로그인에서 입력한 아이디와 비밀번호가 모두 일치하면 회원정보 가져오기
-        MemberDto result = memberDao.info(  loginMno );
+    // [4] 회원정보조회
+    public MemberDto info( int mno ){
+        MemberDto result = memberDao.info( mno );
         return result;
     }
 
-    // [A] 아이디 중복 검사(true=이미 존재 / false=사용 가능)
-    // 2025-08-13
-    public boolean checkId(String mid , String type ) {
-        return memberDao.checkId(mid , type);
+    // [5] 특정한 필드/열/컬럼 의 값 중복/존재 확인
+    public boolean check( String type , String data ){
+        boolean result = memberDao.check( type , data );
+        return result;
     }
 
-
-    // [U] 회원수정(이름/연락처)
-    // 2025-08-13
-    public boolean updateMember(MemberDto memberDto) {
-        // 필요한 경우: 존재 여부나 권한 체크 로직 추가 가능
-        return memberDao.updateMember(memberDto);
+    // [6] 회원정보 수정
+    public boolean update( MemberDto memberDto ){
+        boolean result = memberDao.update( memberDto );
+        return result;
     }
 
-    // [D] 회원탈퇴
-    // 2025-08-13
-    public boolean deleteMember(int mno) {
-        return memberDao.deleteMember(mno);
+    // [7] 회원비밀번호수정
+    public boolean updatePassword( int mno , Map<String,String> map ){
+        boolean result = memberDao.updatePassword( mno , map );
+        return result;
     }
-
-    // [P] 비밀번호 변경
-    // 2025-08-13
-    public boolean changePassword(int mno, String currentPwd, String newPwd) {
-        // 필요 시: newPwd 유효성(길이/복잡도) 검증 추가 가능
-        return memberDao.updatePassword(mno, currentPwd, newPwd);
+    // [8] 회원탈퇴
+    public boolean delete( int mno , String oldpwd ){
+        boolean result = memberDao.delete( mno , oldpwd );
+        return result;
     }
+} // class end
 
-}
+
+
+
+
+
+
+
+
+
+
+
+

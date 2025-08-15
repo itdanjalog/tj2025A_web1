@@ -1,112 +1,43 @@
-//[1] 로그인 정보 요청 함수 
-const getLoginInfo = async ( ) => {
 
-	
-	
-	let loginmenu = document.querySelector('.loginmenu'); // (1)로그인 메뉴를 출력할 구역 가져오기 
-	let html = ``; // (2) html 변수 선언 
-	
-	try{
-	const option = { method : 'GET' } 
-
-	const response = await fetch( '/member/info' , option );
-	const data = await response.json();
-	console.log('로그인상태');
-		// (3) 각 상태에 따라 로그인 메뉴 구성
-		html += `<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						${ data.mid }님
-					</a>
-					<ul class="dropdown-menu">
-						<li class="nav-item"> <a class="nav-link" href="/member/info.jsp">마이페이지</a> </li>
-						<li class="nav-item"> <a class="nav-link" href="#" onclick="onLogOut()">로그아웃</a> </li>
-					</ul>
-				</li>
-				`
-
-	}catch{
-		console.log('비로그인상태');
-		html += `<li class="nav-item"> <a class="nav-link" href="/member/login.jsp">로그인</a> </li>
-				<li class="nav-item"> <a class="nav-link" href="/member/signup.jsp">회원가입</a> </li>`
-	}
-	// (4) 구성한 메뉴들을 innerHTML 한다.
-	loginmenu.innerHTML = html;
-
-}; // f end 
-getLoginInfo(); // JS가 열렸을때 최초 1번 실행
-
-// [2] 로그아웃 요청 함수 
-const onLogOut = ( ) => {
-	const option = { method : 'GET' }
-	fetch( '/member/logout' , option )
-		.then( response =>  response.json() )
-		.then( data => {
-			if( data==true){ 
-				alert('로그아웃합니다.'); 
-				location.href="/member/login.jsp";
-			}
-		})
-		.catch( e => {console.log(e); })
-} // f end 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// * JS 실행 확인 
+console.log( "header.js open");
+
+// [1] 내정보 요청해서 헤더 메뉴 나누기.
+const myinfo = async() =>{
+    const logMenu = document.querySelector('#log-menu'); // (1) 어디에
+    let html ='' // (2) 무엇을
+    try{
+        // 1. fetch 실행 
+        const option = { method : "GET"}
+        const response = await fetch( "/member/info" , option );
+        const data = await response.json();   console.log( data );
+        // **비로그인시 응답자료가 null 이라서 .json() 타입변환 함수 에서 오류 발생해서 catch 로 이동 **
+        // 2. [로그인중]로그인 했을때 정상 통신 fetch
+        html += ` <li> <sapn> ${ data.mid } 님 </sapn> </li>
+            <li> <a href="/member/info.jsp"> 내정보 </a> </li>
+            <li> <a href="#" onclick="logout()"> 로그아웃 </a> </li>`
+    }catch{
+        // 2. [비로그인중]로그인 안했을때 비정상 통신 fetch 
+        html += `<li> <a href="/member/login.jsp"> 로그인 </a></li>
+               <li> <a href="/member/signup.jsp"> 회원가입 </a></li>`
+    }
+    logMenu.innerHTML = html; // (3) 출력
+} // func end 
+myinfo(); // header.jsp 열릴때마다 1번 최초 실행 
+
+// [2] 로그아웃. 
+const logout = async() =>{
+    try{
+        // 1. fetch 실행 
+        const option = { method : "GET"}
+        const response = await fetch( "/member/logout" , option );
+        const data = await response.json();
+        // 2. fetch 통신 결과
+        if( data == true ){
+            alert('로그아웃 했습니다');
+            location.href="/index.jsp"; // 로그아웃 성공시 메인페이지로 이동
+        }else{
+            alert('비정상 요청 및 관리자에게문의');
+        }
+    }catch{ }
+} // func end 

@@ -1,0 +1,45 @@
+* 콘솔에 사이드 메뉴중에 최상단 메시지를 클릭하여 위에서부터 'ERROR' 메시지 이하 확인
+1) 스프링서버는(AppStart) 2개 이상 실행 안됨.
+    - port(프로그램 네트워크 식별번호:프로그램당 1개) 중복이다.
+    (1) 현재 실행중인 AppStart 명 확인
+    (2) Web server failed to start. Port 8080 was already in use.
+        - 간혹 port 자동 종료가 안되는경우
+        방법1) 컴퓨터 재시작
+        방법2) 직접 port 끄기 , cmd -> 'netstat -ano'
+            ->  0.0.0.0:8080 의 오른쪽 PID 확인한다.
+            -> 'taskkill /f /pid [PID]'    예] taskkill /f /pid 6420
+
+2) 스프링에서 resources 폴더와 webapp 폴더는 모든 AppStart 가 공유한다.
+3) JSP는 무조건 webapp 폴더 내 자료(JSP/CSS/JS/IMG 등등)만 사용 가능하다.
+4) 프론트엔드 코드(JSP/CSS/JS) 들은 일부(조금)만 수정 할 경우 브라우저 식별 안되므로 브라우저 강력새로고침 한다.
+    단축키 : Ctrl + Shift + R 또는 Ctrl + F5
+5) 모든 프로그래밍 언어들은 키워드(미리만들어진단어)로 변수명/함수명/클래스명 안됨.
+    1. **JAVA는 키워드 오류 바로 발생**
+    2. **JS는 키워드 오류 바로 발생 : CONSOLE확인**
+
+6) 프론트엔드에서 경로 설정 , / 슬래시 주의
+    1. jsp/css/js : webwapp 또는 static 이하 경로 확인
+        http://localhost:8080 (절대경로) vs / (상대경로 )
+        [O] <jsp:include page="http://localhost:8080/header.jsp"></jsp:include>
+        [O] <jsp:include page="/header.jsp"></jsp:include>
+        [X] <jsp:include page="header.jsp"></jsp:include>
+
+    2. fetch : controller 경로 확인
+        [O] fetch( "http://localhost:8080/member/login" )
+        [O] fetch( "/member/login" )
+        [X] fetch( "member/login" )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
