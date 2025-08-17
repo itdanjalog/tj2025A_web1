@@ -14,9 +14,11 @@
     <div id="header">
         <ul id="sub-menu">
             <li> <a href="/index.jsp"> <img src="/img/logo.jpg"/> </a> </li>
-            <li> <a href="#"> 메뉴1 </a> </li>
-            <li> <a href="#"> 메뉴2 </a> </li>
-            <li> <a href="#"> 메뉴3 </a> </li>
+            <li> <a href="/datago/data.jsp"> 공공데이터 </a> </li>
+            <li> <a href="/kakao/map.jsp"> 카카오맵 </a> </li>
+            <li> <a href="/product/create.jsp"> 중고제품등록 </a> </li>
+            <li> <a href="/product/list.jsp"> 중고제품목록 </a> </li>
+            <li> <a href="/chat/chat.jsp"> 채팅 </a> </li>
         </ul>
         <ul id="log-menu"> <!-- 로그인 안했을때 구역 / 로그인 했을때 구역  를 JS 해서 표현 -->
 

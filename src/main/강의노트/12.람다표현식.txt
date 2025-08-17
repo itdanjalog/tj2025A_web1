@@ -1,0 +1,66 @@
+[ 람다식 과 반복문 ]
+    [ JAVA ]
+        // 일반 메소드
+        int add(int a, int b) { return a + b; }
+
+        // 람다식 (Java 8+)
+        (int a, int b) -> { return a + b; }
+
+    - 반복문
+        // 1. 전통적 for문
+        for (int i = 0; i < 10; i++) { }
+
+        // 2. 향상된 for문 (배열/리스트 순회)
+        for (타입 변수 : 리스트/배열) { }
+
+        // 3. forEach (반환값 없음)
+        리스트.stream().forEach(변수 -> { });
+
+        // 4. map (변환 후 수집 가능)
+        리스트.stream()
+             .map(변수 -> { })   // 한 줄이면 return 생략 가능
+             .collect(Collectors.to컬렉션명());
+
+        // 5. filter (조건에 맞는 요소만 수집)
+        리스트.stream()
+             .filter(변수 -> { })
+             .collect(Collectors.to컬렉션명());
+
+    [ JS ]
+    - 메소드
+        // 일반 함수
+        function add(a, b) { return a + b; }
+
+        // 화살표 함수 (람다식 유사)
+        (a, b) => { return a + b; }
+
+    - 반복문
+        // 1. 전통적 for문
+        for (let i = 0; i < 10; i++) { }
+
+        // 2. for-in (객체의 key 순회 / 배열 인덱스 순회)
+        for (let index in 배열) { }
+
+        // 3. for-of (배열 요소 순회, ES6+)
+        for (let item of 배열) { }
+
+        // 4. forEach (반환값 없음)
+        리스트.forEach(변수 => { });
+
+        // 5. map (각 요소 변환, 새 배열 반환)
+        리스트.map(변수 => { });
+
+        // 6. filter (조건 만족 요소만 새 배열 반환)
+        리스트.filter(변수 => { });
+
+    3. 핵심 차이 요약
+    Java
+        람다식은 -> 로 표현 (Java 8 이상).
+        반복문에서 stream(), map(), filter() 등 Stream API 활용.
+        forEach는 반환값 없음, map은 변환 후 수집(collect).
+        collect(Collectors.toList()), collect(Collectors.toSet()) 등 결과물 지정 가능.
+
+    JavaScrip
+        함수 표현식으로 function / => 모두 사용 가능.
+        반복문은 for, for-in, for-of, 배열 고차함수(forEach, map, filter) 다양.
+        forEach는 반환값 없음, map과 filter는 새 배열 반환.
