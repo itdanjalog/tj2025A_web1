@@ -1,6 +1,9 @@
 [ 문제 ] 아래 링크에 요구사항을 확인하여 프로그램을 완성하시오.
 [요구사항1] 공공데이터 "인천광역시 연수구_관내 학교 현황" API 활용하여 카카오 지도에 마커에 출력하시오.
 https://www.data.go.kr/data/15039731/fileData.do#/API%20%EB%AA%A9%EB%A1%9D/getuddi%3A1fcb72a0-ba75-4c97-a045-9ef7e3ef43c0
+[ 참고 URL ]
+const serviceKey = "nwPZ%2F9Z3sVtcxGNXxOZfOXwnivybRXYmyoIDyvU%2BVDssxywHNMU2tA55Xa8zvHWK0bninVkiuZAA4550BDqIbQ%3D%3D"
+const URL = "https://api.odcloud.kr/api/15039731/v1/uddi:1fcb72a0-ba75-4c97-a045-9ef7e3ef43c0?page=1&perPage=72&serviceKey="
 
 1-1. 학교 마커 표시
     - 공공데이터 "인천광역시 연수구_관내 학교 현황" API에서 데이터를 가져온다.

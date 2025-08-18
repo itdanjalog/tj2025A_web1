@@ -23,7 +23,7 @@
 
         // 5. filter (조건에 맞는 요소만 수집)
         리스트.stream()
-             .filter(변수 -> { })
+             .filter(변수 -> { } )
              .collect(Collectors.to컬렉션명());
 
     [ JS ]
@@ -64,3 +64,102 @@
         함수 표현식으로 function / => 모두 사용 가능.
         반복문은 for, for-in, for-of, 배열 고차함수(forEach, map, filter) 다양.
         forEach는 반환값 없음, map과 filter는 새 배열 반환.
+
+
+
+    public static void main(String[] args) {
+        // -------------------------------
+        // [메소드 vs 람다식]
+        // -------------------------------
+
+        // 일반 메소드
+        System.out.println(add(3, 5)); // 8
+
+        // 람다식 (함수형 인터페이스 활용, return 명시)
+        java.util.function.BiFunction<Integer, Integer, Integer> addLambda =
+                (a, b) -> { return a + b; };
+        System.out.println(addLambda.apply(10, 20)); // 30
+
+
+        // -------------------------------
+        // [반복문]
+        // -------------------------------
+        List<String> names = Arrays.asList("Java", "Python", "Go");
+
+        // 1. 전통적 for문
+        for (int i = 0; i < names.size(); i++) {
+            System.out.println("for문: " + names.get(i));
+        }
+
+        // 2. 향상된 for문
+        for (String name : names) {
+            System.out.println("향상된 for문: " + name);
+        }
+
+        // 3. forEach (반환 없음)
+        names.forEach(n -> { System.out.println("forEach: " + n); });
+
+        // 4. map (변환 후 수집, return 명시)
+        List<Integer> lengths = names.stream()
+                                     .map(n -> { return n.length(); })
+                                     .collect(Collectors.toList());
+        System.out.println("map 결과: " + lengths);
+
+        // 5. filter (조건 적용, return 명시)
+        List<String> filtered = names.stream()
+                                     .filter(n -> { return n.length() <= 4; })
+                                     .collect(Collectors.toList());
+        System.out.println("filter 결과: " + filtered);
+    }
+
+    // 일반 메소드
+    static int add(int a, int b) {
+        return a + b;
+    }
+}
+
+
+
+// 2025-08-18: JavaScript 함수 & 반복문 예제 (return 명시)
+
+// -------------------------------
+// [함수]
+// -------------------------------
+function add(a, b) {
+    return a + b;
+}
+console.log(add(3, 5)); // 8
+
+const addArrow = (a, b) => { return a + b; };
+console.log(addArrow(10, 20)); // 30
+
+// -------------------------------
+// [반복문]
+// -------------------------------
+const arr = ["Java", "Python", "Go"];
+
+// 1. 전통적 for문
+for (let i = 0; i < arr.length; i++) {
+    console.log("for문:", arr[i]);
+}
+
+// 2. for-in (인덱스 순회)
+for (let index in arr) {
+    console.log("for-in:", index, arr[index]);
+}
+
+// 3. for-of (값 순회)
+for (let item of arr) {
+    console.log("for-of:", item);
+}
+
+// 4. forEach (반환 없음)
+arr.forEach(item => { console.log("forEach:", item); });
+
+// 5. map (길이 배열로 변환, return 명시)
+const lengths = arr.map(item => { return item.length; });
+console.log("map 결과:", lengths);
+
+// 6. filter (길이가 4 이하인 요소만 반환, return 명시)
+const filtered = arr.filter(item => { return item.length <= 4; });
+console.log("filter 결과:", filtered);
