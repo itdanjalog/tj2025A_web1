@@ -19,12 +19,12 @@ public class ProductService {
         return productDao.createProduct(productDto);
     }
 
-    // [2] 제품 이미지 저장 (DB에 파일명 기록)
+    // [1] 제품 이미지 저장 (DB에 파일명 기록)
     public boolean saveProductImages(int pno, String filename) {
         return productDao.saveProductImages( pno , filename);
     }
 
-    // [3] 모든 제품 조회
+    // [2] 모든 제품 조회
     public List<ProductDto> getAllProducts() {
         List<ProductDto> result =  productDao.getAllProducts();
 
@@ -36,6 +36,7 @@ public class ProductService {
         return  result;
     }
 
+    // [3] 개별 제품 조회
     public ProductDto getProduct( int pno ) {
         ProductDto products = productDao.getProduct( pno );
         List<String> result2 = productDao.getProductImages( products.getPno() );

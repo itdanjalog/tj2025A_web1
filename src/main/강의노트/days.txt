@@ -10,28 +10,25 @@
     8*)
 
 59) 08월 19일 화 : 파일업로드 / 다운로드 , 프로필 등록 , 정규표현식
-    1) HTTP + 응답코드
+    1) HTTP, 응답코드
     2) 파일업로드
     3) 다운로드 / 파일삭제
     4) 제품 등록( pno제품코드 auto_increment , pname제품명 , pprice 제품가격 , pcomment 제품설명 , pdate 등록일/시간 datetime , plat위도  , plon경도 , mno등록자 );
     5) 제품 사진( pimgcode사진코드 , pimgname사진명 , pno제품코드 );
-    6*) 회원가입시 프로필 등록 , ㅁ
+    6*) 회원가입시 프로필 등록,
     7*)
     8*)
 
 60) 08월 20일 수 : 소켓(채팅)
-    1)
-    2)
-    3)
+    1) 파일/다운로드 정리
+    2) 등록 화면
+    3) 출력 하면 , 조건화면 , 검색화면
     4)
-    5)
-    6)
+    5*)
+    6*)
     7*)
     8*)
 
-
-https://github.com/itdanjalog/tj_2024A_springpy/blob/master/src/main/java/web/config/WebSocketConfig.java
-https://github.com/itdanjalog/tj2024b_web1/blob/master/tj2024b_web1/src/main/webapp/js/chatting/chatting.js
 
 61) 08월 21일 목 : 소켓(채팅), 3프로젝트 시작
     1)
@@ -52,6 +49,9 @@ https://github.com/itdanjalog/tj2024b_web1/blob/master/tj2024b_web1/src/main/web
     6*)
     7*)
     8*)
+
+https://github.com/itdanjalog/tj_2024A_springpy/blob/master/src/main/java/web/config/WebSocketConfig.java
+https://github.com/itdanjalog/tj2024b_web1/blob/master/tj2024b_web1/src/main/webapp/js/chatting/chatting.js
 
 ======================================================================
 63) 08월 25일 월 :

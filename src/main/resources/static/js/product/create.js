@@ -60,7 +60,7 @@ const onCreate = async( ) =>{
 
 	const option = { 
 		method : 'POST' , 
-        //headers : { "Content-Type" : "multipart/form-data"},
+        //headers : { "Content-Type" : "multipart/form-data"}, // FormData 객체 → 자동으로 multipart/form-data 전송
 	 	body : productFormData
 	} 
 		// (3) fetch 요청 과 응답 

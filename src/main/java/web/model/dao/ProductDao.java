@@ -41,7 +41,7 @@ public class ProductDao extends Dao { // Dao는 JDBC Connection 상속
         return 0;
     }
 
-    // [2] 제품 이미지 저장
+    // [1] 제품 이미지 저장 (DB에 파일명 기록)
     public boolean saveProductImages(int pno, String filename) {
         try {
             String sql = "INSERT INTO productimg(pimgname, pno) VALUES(?,?)";
@@ -55,7 +55,7 @@ public class ProductDao extends Dao { // Dao는 JDBC Connection 상속
         return false;
     }
 
-    // [3] 모든 제품 조회
+    // [2] 모든 제품 조회
     public List<ProductDto> getAllProducts() {
         List<ProductDto> list = new ArrayList<>();
         try {
@@ -84,7 +84,7 @@ public class ProductDao extends Dao { // Dao는 JDBC Connection 상속
         return list;
     }
 
-    // [제품 이미지 조회] Helper
+    // [2] 모든 제품 조회, [제품 이미지 조회]
     public List<String> getProductImages(int pno) {
         List<String> images = new ArrayList<>();
         try {
@@ -101,6 +101,7 @@ public class ProductDao extends Dao { // Dao는 JDBC Connection 상속
         return images;
     }
 
+    // [3] 개별 제품 조회
     public ProductDto getProduct( int pno ) {
         try {
             // 제품 조회

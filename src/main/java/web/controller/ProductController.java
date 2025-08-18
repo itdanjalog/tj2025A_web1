@@ -44,7 +44,7 @@ public class ProductController {
         return products;
     }
 
-    // [2] 개별 제품 조회
+    // [3] 개별 제품 조회
     @GetMapping("")
     public ProductDto getProduct( @RequestParam int pno ) {
         ProductDto products = productService.getProduct( pno );
