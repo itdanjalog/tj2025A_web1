@@ -15,12 +15,11 @@ import java.util.List;
 public class ProductController {
 
     @Autowired private ProductService productService;
-
     @Autowired private FileService fileService;
 
     // [1] 제품 등록
     @PostMapping("/create")
-    public int createProduct(ProductDto productDto , HttpSession session) {
+    public int createProduct( @ModelAttribute ProductDto productDto , HttpSession session) {
 
         if( session.getAttribute("loginMno") == null ) return 0 ;
 
@@ -28,7 +27,7 @@ public class ProductController {
         productDto.setMno( mno );
 
         int result = productService.createProduct(productDto); // 제품 저장
-        if (result > 0 && productDto.getUploads() != null && !productDto.getUploads().isEmpty()) {
+        if (result > 0 && !productDto.getUploads().isEmpty() && !productDto.getUploads().get(0).isEmpty() ) {
             // 제품 이미지 업로드 & DB 저장
             for( MultipartFile multipartFile : productDto.getUploads() ){
                 String filename =  fileService.fileUpload( multipartFile );

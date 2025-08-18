@@ -63,26 +63,19 @@ getMap();
 let 위도경도 = '';
 
 
-// [1] 회원가입 요청 함수 
+// [1] 제품등록 요청 함수
 const onCreate = async( ) =>{
-	// 1. form 를 한번에 가져오기. application/json ---> multipart/form-data( 첨부파일 )
-		// * form-data 로 전송할 경우에는 속성명들을 'name' 속성으로 사용된다.
-	const signupform = document.querySelector('#productForm');  // form 전체 가져오기 
-		console.log( signupform );
-	// *. Fetch 함수 이용한 'multipart/form-data'(대용량) 타입으로 전송하는 방법 
-		// (1) 전송 할 폼을 바이트(바이너리/스트림) 데이터로 변환 , FormData 클래스 , new FormData( 폼DOM );
-	const signupformData = new FormData( signupform );
-			//signupformData.append( "속성명" , 값 ); // 만일 html 폼에 없는 데이터를 폼데이터에 추가하는 방법
-		// (2) fetch 옵션 , content-type 생략하면 자동으로 'multipart/form-data' 적용된다.
-
-        signupformData.append("plat" , 위도경도.getLat()); //위도 - lat , y
-        signupformData.append("plng" , 위도경도.getLng()); // 경도 - lon , x
-        console.log(signupformData)
+	const productForm = document.querySelector('#productForm');
+		console.log( productForm );
+	const productFormData = new FormData( productForm );
+        productFormData.append("plat" , 위도경도.getLat()); //위도 - lat , y
+        productFormData.append("plng" , 위도경도.getLng()); // 경도 - lon , x
+        console.log(productFormData)
 
 	const option = { 
 		method : 'POST' , 
         //headers : { "Content-Type" : "multipart/form-data"},
-	 	body : signupformData 
+	 	body : productFormData
 	} 
 		// (3) fetch 요청 과 응답 
 	

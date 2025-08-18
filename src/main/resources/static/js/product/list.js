@@ -83,9 +83,13 @@ const getMap = async () => {
 					//   document.querySelector('.주소').innerHTML = position.소재지도로명주소;
 
                     let imghtml = ``;
-                    product.images.forEach( ( image ) => {
-                        imghtml += `<img style="width: 100px;  object-fit: cover;height: 100px;"  src="/upload/${ image == null ? 'default.png' : image  }" />`
-                    })
+                    if( product.images != null ){
+                        product.images.forEach( ( image ) => {
+                            imghtml += `<img style="width: 100px;  object-fit: cover;height: 100px;"  src="/upload/${  image  }" />`
+                        })
+                    }else{
+                        imghtml += `<img style="width: 100px;  object-fit: cover;height: 100px;"  src="/upload/default.png" />`
+                    }
 
 
 						html2 += `
@@ -100,7 +104,6 @@ const getMap = async () => {
                                 <div class="설명"> ${ product.pcomment } </div>
 							</div>
 						`
-
 					  sidebar.innerHTML = html2;
 					
 				});
