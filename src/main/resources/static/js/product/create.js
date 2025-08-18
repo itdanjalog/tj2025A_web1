@@ -1,18 +1,4 @@
 
-const myPosition = async () =>{
-		const position = await new Promise((resolve, reject) => {
-			navigator.geolocation.getCurrentPosition(
-				resolve, // ✅ 위치 가져오기 성공 시 → Promise의 resolve() 실행
-				reject,  // ❌ 위치 가져오기 실패 시 → Promise의 reject() 실행
-				{
-					enableHighAccuracy: true, // 가능한 가장 정확한 위치(배터리 소모 증가 가능)
-					timeout: 5000,            // 5초 안에 위치 못 가져오면 실패 처리
-					maximumAge: 0             // 캐시된 위치 정보 사용 안 함(항상 새로 요청)
-				}
-			);
-		});
-	return position;
-}
 const getMap = async () => {
 
 

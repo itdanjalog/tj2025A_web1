@@ -36,4 +36,11 @@ public class ProductService {
         return  result;
     }
 
+    public ProductDto getProduct( int pno ) {
+        ProductDto products = productDao.getProduct( pno );
+        List<String> result2 = productDao.getProductImages( products.getPno() );
+        products.setImages( result2 );
+        return products;
+    }
+
 }

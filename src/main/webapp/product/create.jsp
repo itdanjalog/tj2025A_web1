@@ -27,6 +27,8 @@
             <button type="button" onclick="onCreate()"> 제품등록 </button>
         </form>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1ac4a57d8a5927d34020a891fcdbbcbd"></script>
+
+    <script src="/js/kakao/position.js"></script>
     <script src="/js/product/create.js"></script>
 
 </body>

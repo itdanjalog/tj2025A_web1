@@ -100,4 +100,33 @@ public class ProductDao extends Dao { // Dao는 JDBC Connection 상속
         }
         return images;
     }
+
+    public ProductDto getProduct( int pno ) {
+        try {
+            // 제품 조회
+            String sql = "SELECT * FROM product where pno = ? ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt( 1 , pno );
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                ProductDto dto = new ProductDto();
+                dto.setPno(rs.getInt("pno"));
+                dto.setPname(rs.getString("pname"));
+                dto.setPprice(rs.getInt("pprice"));
+                dto.setPcomment(rs.getString("pcomment"));
+                dto.setPdate(rs.getString("pdate"));
+                dto.setPlat(rs.getDouble("plat"));
+                dto.setPlng(rs.getDouble("plng"));
+                dto.setMno(rs.getInt("mno"));
+                return dto;
+            }
+
+        } catch (Exception e) {
+            System.out.println("[ProductDao.getAllProducts] 오류 : " + e);
+        }
+        return null;
+    }
+
+
 }
