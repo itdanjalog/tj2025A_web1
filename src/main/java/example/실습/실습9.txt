@@ -1,48 +1,32 @@
-day58 SPRING WEB1 ] 실습9: 포인트 기능 구현
+day58 SPRING WEB1 ] 실습9: 회원 프로필(사진) 구현
 [문제] 아래 링크에 요구사항을 확인하여 프로그램을 완성하시오.
-[요구사항1] 포인트 지급 조건
-    1. 회원가입 완료 시 → +1000 포인트 지급 기록 생성
-    2. 로그인 성공 시마다 → +10 포인트 지급 기록 생성
-    3. 지급 이력은 pointlog 테이블에 저장
-        plno (AUTO_INCREMENT, PK)
-        mno (회원번호, FK)
-        plpoint (지급 포인트, INT)
-        plcomment (사유: '회원가입', '로그인')
-        pldate (지급일시, DATETIME DEFAULT NOW())
-
-[요구사항2] 마이페이지 에서 포인트 지급 내역 전체 조회
-    1. 로그인한 회원(mno)의 모든 포인트 지급 내역을 출력
-    2. 지급일시(pldate) 기준 내림차순 정렬
-
-[요구사항3] 로그인후 현재 포인트(합계) 출력
-    1. 로그인 성공 시 header.jsp 상단에 기존 출력된 아이디 옆에 현재 보유 포인트 함께 표시
-        예시: hong123 (현재 포인트: 1,200점)
-    2. 현재 포인트 계산 방식, pointlog 테이블에서 해당 회원의 모든 지급 포인트 합계를 계산
-
-[ 참고 SQL 및 샘플 INSERT ]
--- ---------------------- pointlog ---------------------------------- --
-CREATE TABLE pointlog (
-	plno      INT AUTO_INCREMENT,
-	mno       INT NOT NULL,
-	plpoint   INT NOT NULL,
-	plcomment VARCHAR(100) NOT NULL,
-	pldate    DATETIME DEFAULT NOW(),
-	CONSTRAINT PRIMARY KEY (plno),
-	CONSTRAINT FOREIGN KEY (mno) REFERENCES member(mno) ON DELETE CASCADE
-);
--- ---------------------- 포인트 적립 샘플 ---------------------- --
--- 회원 1이 회원가입 포인트 지급 (+1000)
-INSERT INTO pointlog (mno, plpoint, plcomment) VALUES (1, 1000, '회원가입');
--- 회원 1이 로그인 포인트 지급 (+100) 3회
-INSERT INTO pointlog (mno, plpoint, plcomment) VALUES (1, 100, '로그인');
-INSERT INTO pointlog (mno, plpoint, plcomment) VALUES (1, 100, '로그인');
-INSERT INTO pointlog (mno, plpoint, plcomment) VALUES (1, 100, '로그인');
--- ---------------------- 포인트 충전/차감 샘플 ---------------------- --
--- 회원 1이 포인트 충전 (+5000)
-INSERT INTO pointlog (mno, plpoint, plcomment) VALUES (1, 5000, '포인트충전');
--- 회원 1이 제품 구매로 포인트 차감 (-6000)
-INSERT INTO pointlog (mno, plpoint, plcomment) VALUES (1, -6000, '상품구매');
--- 회원 1이 이벤트 참여로 포인트 적립 (+500)
-INSERT INTO pointlog (mno, plpoint, plcomment) VALUES (1, 500, '이벤트적립');
+[요구사항1] 회원가입 시 프로필 등록
+    1. 회원가입 시 첨부파일(이미지)을 업로드 가능해야 함
+    2. 업로드한 파일을 memberimg 테이블에 저장, mimgname : 파일명 / mno : 해당 회원 번호 (FK)
+[요구사항2] 로그인 후 프로필 출력
+    1. header.jsp에서 로그인한 회원의 (기존출력된)아이디 옆에 최신 프로필 사진을 표시해야 함
+    2. 프로필 사진이 존재하면 → DB(memberimg)에 등록된 회원 이미지 출력
+    3. 프로필 사진이 없으면 → 기본 프로필 이미지를 출력
+[요구사항3] 마이페이지 에서 프로필 수정
+    1. 마이페이지 화면 제공
+        · 마이페이지에서 회원이 자신의 프로필 사진을 확인할 수 있어야 함
+        · 기존 등록된 프로필 사진 출력 (없으면 기본 이미지 출력)
+    2. 프로필 변경 기능
+        · 회원이 새로운 프로필 사진을 업로드 가능해야 함
+        · 업로드한 사진은 memberimg 테이블에 새 레코드로 저장, mimgname : 새 파일명 / mno : 회원 번호 (FK)
+        · 기존 사진을 삭제하지 않고 이력 관리 (최신 등록된 이미지만 사용)
+    3. 최신 프로필 반영
+        · header.jsp, 마이페이지.jsp 등에서 항상 회원별 최신 등록 이미지를 조회하도록 구현
+[ 참고 SQL ]
+    -- ---------------------- memberimg ---------------------------------- --
+    CREATE TABLE memberimg (
+        mimgno    INT AUTO_INCREMENT,              -- 회원 이미지 번호 (기본키)
+        mimgname  VARCHAR(255) NOT NULL,           -- 파일명
+        mno       INT NOT NULL,                    -- 회원 번호 (FK)
+        CONSTRAINT PRIMARY KEY (mimgno),
+        CONSTRAINT FOREIGN KEY (mno) REFERENCES member(mno) ON DELETE CASCADE
+    );
 
 [ 제출방법 ] 코드가 작성된 파일이 위치한 깃허브 상세 주소를 제출하시오.
+
+
