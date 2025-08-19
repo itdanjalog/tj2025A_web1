@@ -1,0 +1,26 @@
+심화 SPRING WEB1 ] 심화: 아임포트 (테스트)결제 API 연동
+[문제] 아래 링크에 요구사항을 확인하여 프로그램을 완성하시오.
+[참고] 아래 링크의 아임포트 연동 공식문서를 참고하여 결제 API 연동하시오.
+    1.https://developers.portone.io/opi/ko/readme?v=v2
+
+[요구사항1] 아임포트(테스트 결제) API 연동 – 포인트 충전
+    *. 실제로 결제가 되므로 '결제취소'를 '결제성공' 으로 가정하여 진행
+    1. 로그인한 회원은 포인트 충전 페이지(pointCharge.jsp) 에서 1,000원 / 5,000원 / 10,000원 등 금액 버튼 선택
+    2. 선택한 금액만큼 아임포트 테스트 결제 API 호출 → 카드결제 시뮬레이션 진행 ,
+    3. 결제성공시 DB에 결제내역 저장 (payment 테이블)
+
+[요구사항2] 포인트 충전 처리
+    1. 모든 포인트 내역은 pointlog(실습8) 테이블에서 관리
+    2. 결제가 성공하면, 결제 금액만큼 회원의 포인트를 충전 ( plcomment = '포인트충전' )
+    3. 추가로, 결제 금액의 5%를 보너스 포인트로 적립 ( plcomment = '충전보너스' )
+
+[ 참고 SQL ]
+CREATE TABLE payment (
+    pno       INT AUTO_INCREMENT PRIMARY KEY,  -- 결제번호
+    mno       INT NOT NULL,                    -- 회원번호 (FK)
+    pamount   INT NOT NULL,                    -- 결제금액
+    pdate     DATETIME DEFAULT now(),          -- 결제일시
+    CONSTRAINT FOREIGN KEY (mno) REFERENCES member(mno) ON DELETE CASCADE
+);
+
+[ 제출방법 ] 코드가 작성된 파일이 위치한 깃허브 상세 주소를 제출하시오.
