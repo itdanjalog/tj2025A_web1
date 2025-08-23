@@ -31,12 +31,16 @@
             				<li class="nav-item"> <a class="nav-link" href="/post/post.jsp?cno=3">FAQ</a> </li>
             				<li class="nav-item"> <a class="nav-link" href="/post/post.jsp?cno=4">튜토리얼</a> </li>
             				<li class="nav-item"> <a class="nav-link" href="/post/post.jsp?cno=5">사용자리뷰</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="/chatting/chatting.jsp"> 채팅 </a> </li>
 
         </ul>
         <ul id="log-menu"> <!-- 로그인 안했을때 구역 / 로그인 했을때 구역  를 JS 해서 표현 -->
 
         </ul>
     </div>
+
+    <div class="alarmbox" style=" position: fixed; bottom: 10px; left: 10px; "></div>
+
     <!-- JS 가져오기 -->
     <script src="/js/header.js"> </script>
 
