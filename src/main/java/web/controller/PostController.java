@@ -10,6 +10,7 @@ import web.service.PostService;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController // (1) HTTP 요청/응답 자료 매핑 기술
@@ -89,6 +90,58 @@ public class PostController {
         // 2. 서비스에 게시물 번호와 로그인 회원 번호를 전달
         return postService.getPost(pno, loginMno);
     }
+
+
+    /**
+     * [3] 게시물 삭제 컨트롤러
+     * @param pno 삭제할 게시물 번호
+     * @return 성공 여부 (boolean)
+     *
+     * - @DeleteMapping: HTTP DELETE 요청을 처리합니다.
+     */
+    @DeleteMapping
+    public boolean deletePost(@RequestParam int pno) {
+        // 서비스 계층을 호출하여 게시물을 삭제합니다.
+        return postService.deletePost(pno);
+    }
+
+    /**
+     * [4] 게시물 수정 컨트롤러
+     * @param postDto { pno, ptitle, pcontent } JSON 객체
+     * @return 성공 여부 (boolean)
+     *
+     * - @PutMapping: HTTP PUT 요청을 처리합니다.
+     */
+    @PutMapping
+    public boolean updatePost(@RequestBody PostDto postDto) {
+        // 서비스 계층을 호출하여 게시물을 수정합니다.
+        return postService.updatePost(postDto);
+    }
+
+
+    @PostMapping("/reply")
+    public boolean writeReply(@RequestBody Map<String, String> map , HttpSession session) {
+        // 1. 세션에서 로그인된 회원 번호 가져오기
+        Object loginMnoObject = session.getAttribute("loginMno");
+        if (loginMnoObject == null) {
+            return false; // 비로그인 시 실패
+        }
+        int loginMno = (Integer) loginMnoObject;
+
+        // 2. DTO에 회원 번호 설정
+        map.put( "mno" , loginMno+"" );
+
+        // 3. 서비스 호출
+        return postService.writeReply(map);
+    }
+
+    @GetMapping("/reply")
+    public List<Map<String, String>> getReplies(@RequestParam int pno) {
+        return postService.getReplies(pno);
+    }
+
+
+
 
 } // class end
 

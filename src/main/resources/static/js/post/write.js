@@ -1,21 +1,22 @@
 // [*] 썸머노트 실행
-$(document).ready(function() {
-  $('#summernote').summernote({
-    placeholder : '게시물 내용 입력해주세요.',
-    height : 500,
-    lang : 'ko-KR'
-  });
-});
+// $(document).ready(function() {
+//   $('#summernote').summernote({
+//     placeholder : '게시물 내용 입력해주세요.',
+//     height : 500,
+//     lang : 'ko-KR'
+//   });
+// });
 
 // [1] 글쓰기 요청 메소드 (동기식)
 const onWrite = async () => {
+
     try {
         // 1. 입력받은 값들을 가져오기
         const cno = document.querySelector('.cnoselect').value;
         const ptitle = document.querySelector('.titleinput').value;
         // Summernote 에디터의 내용을 가져오는 올바른 방법
-        const pcontent = $('#summernote').summernote('code');
-
+        // const pcontent = $('#summernote').summernote('code');
+        const pcontent = document.querySelector('.contentinput').value;
         console.log(pcontent);
 
         // 2. 전송할 데이터를 객체로 구성

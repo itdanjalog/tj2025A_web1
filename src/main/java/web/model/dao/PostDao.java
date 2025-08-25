@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class PostDao extends Dao {
@@ -67,7 +69,7 @@ public class PostDao extends Dao {
 
 
 
-    // [3-1] 검색된 게시물 수
+    // [2-3] 검색된 게시물 수
     public int getTotalCountSearch(int cno, String key, String keyword) {
         try {
             // 1. 기본 SQL 작성
@@ -97,7 +99,7 @@ public class PostDao extends Dao {
         return 0;
     }
 
-    // [3-2] 검색된 전체 게시물 정보 조회
+    // [2-4] 검색된 전체 게시물 정보 조회
     public List<PostDto> findAllSearch(int cno, int startRow, int count, String key, String keyword) {
         System.out.println("PostDao.findAllSearch");
         System.out.println("cno = " + cno + ", startRow = " + startRow + ", count = " + count + ", key = " + key + ", keyword = " + keyword);
@@ -139,6 +141,8 @@ public class PostDao extends Dao {
         return list;
     }
 
+
+
     // [5] 게시물 개별 조회
     public PostDto findByPno(int pno) {
         try {
@@ -179,6 +183,74 @@ public class PostDao extends Dao {
         }
     }
 
+    // [3] 게시물 개별 삭제
+    public boolean delete(int pno) {
+        try {
+            String sql = "delete from post where pno = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, pno);
+            return ps.executeUpdate() == 1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    // [4] 게시물 개별 수정
+    public boolean update(PostDto postDto) {
+        try {
+            String sql = "update post set ptitle = ?, pcontent = ? , cno = ?  where pno = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, postDto.getPtitle());
+            ps.setString(2, postDto.getPcontent());
+            ps.setInt(3, postDto.getCno());
+            ps.setInt(4, postDto.getPno());
+            return ps.executeUpdate() == 1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    // === 댓글 관련 DAO (추후 ReplyDao로 분리하는 것을 권장합니다) ===
+
+    // [6] 댓글 쓰기 (요청에 따라 Map 사용)
+    public boolean replyWrite(Map<String, String> map) {
+        try {
+            String sql = "insert into reply ( rcontent, pno, mno ) values( ?, ?, ? )";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, map.get("rcontent"));
+            ps.setString(2, map.get("pno"));
+            ps.setString(3, map.get("mno"));
+            return ps.executeUpdate() == 1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    // [7] 특정 게시물의 댓글 조회
+    public List<Map<String, String>> replyFindAll(int pno) {
+        List<Map<String, String>> list = new ArrayList<>();
+        try {
+            String sql = "select * from reply r inner join member m on r.mno = m.mno where r.pno = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, pno);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Map<String, String> map = new HashMap<>();
+                map.put("rno", rs.getString("rno"));
+                map.put("rcontent", rs.getString("rcontent"));
+                map.put("rdate", rs.getString("rdate"));
+                map.put("mid", rs.getString("mid"));
+                map.put("mno", rs.getString("mno"));
+                list.add(map);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
 
 
 

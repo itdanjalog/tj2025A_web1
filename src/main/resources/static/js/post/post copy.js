@@ -98,16 +98,16 @@ const renderPageButtons = (response) => {
 
     // 1) '이전' 버튼: currentPage가 1 이하이면 1로 고정
     let html = `
-        <li class="">
-            <a class="" href="post.jsp?cno=${cno}&page=${Math.max(currentPage - 1, 1)}${searchParams}">이전</a>
+        <li class="page-item">
+            <a class="page-link" href="post.jsp?cno=${cno}&page=${Math.max(currentPage - 1, 1)}${searchParams}">이전</a>
         </li>`;
 
     // 2) 페이지 번호 버튼: startBtn ~ endBtn 범위를 일반 for문으로 생성
     for (let i = response.startBtn; i <= response.endBtn; i++) {
         // 활성 페이지에는 'active' 클래스 부여(스타일은 CSS에서 정의)
         html += `
-            <li class="">
-                <a class="" href="post.jsp?cno=${cno}&page=${i}${searchParams}">
+            <li class="page-item">
+                <a class="page-link ${currentPage === i ? 'active' : ''}" href="post.jsp?cno=${cno}&page=${i}${searchParams}">
                     ${i}
                 </a>
             </li>`;
@@ -116,7 +116,7 @@ const renderPageButtons = (response) => {
     // 3) '다음' 버튼: currentPage가 totalPage 이상이면 totalPage로 고정
     html += `
         <li class="page-item">
-            <a class="" href="post.jsp?cno=${cno}&page=${Math.min(currentPage + 1, response.totalPage)}${searchParams}">다음</a>
+            <a class="page-link" href="post.jsp?cno=${cno}&page=${Math.min(currentPage + 1, response.totalPage)}${searchParams}">다음</a>
         </li>`;
 
     // 4) 완성된 버튼 HTML을 컨테이너에 삽입

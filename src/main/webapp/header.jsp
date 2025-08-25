@@ -9,11 +9,6 @@
     <!-- css 가져오기 -->
     <link href="/css/header.css" rel="stylesheet">
 
-    	<!--  부트스트랩 CSS -->
-    	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- 부트스트랩 JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" ></script>
-
 
 </head>
 <body>
