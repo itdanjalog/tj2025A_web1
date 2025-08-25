@@ -61,10 +61,18 @@ public class PostController {
      * - @GetMapping: HTTP GET 요청을 처리합니다.
      * - @RequestParam: URL 쿼리 파라미터(cno, page)를 메소드 매개변수로 받습니다.
      */
+
+    // /posts?cno=1&page=1&count=10
+    // /posts?cno=1&page=1&count=10&key=title&keyword=스프링
     @GetMapping
-    public PageDto getPostList(@RequestParam int cno, @RequestParam int page) {
-        // 서비스 계층을 호출하여 페이징 처리된 게시물 목록을 가져옵니다.
-        return postService.getPostList(cno, page);
+    public PageDto findAllPost(@RequestParam(defaultValue = "1") int cno,
+                               @RequestParam(defaultValue = "1") int page, // 기본 페이지 1
+                               @RequestParam(defaultValue = "5") int count, // 기본 개수 10
+                               @RequestParam(required = false) String key, // 검색 키 (필수 아님)
+                               @RequestParam(required = false) String keyword) { // 검색어 (필수 아님)
+
+        // 서비스 계층을 호출하여 페이징 및 검색 처리된 게시물 목록을 가져옵니다.
+        return postService.findAllPost(cno, page, count, key, keyword);
     }
 
     /**

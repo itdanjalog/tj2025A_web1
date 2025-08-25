@@ -2,19 +2,31 @@ package web.model.dto;
 
 import lombok.*;
 
-@Getter@Setter@ToString
-@AllArgsConstructor@NoArgsConstructor // 롬복 준비
-@Builder
-public class PageDto { // 페이징처리된 데이터들의 이동객체
-
-    private int totalCount; // 전체 자료 개수 (검색결과 조회시 사용)
-    private int page ; // 현재 페이지
-    private int totalpage; // 전체 페이지수
-    private int startbtn; // 페이징 버튼 시작번호
-    private int endbtn; // 페이징 버튼 끝번호
-    // Object 타입으로 사용한 이유
-    // - Object 타입은 자바의 최상위 클래스 이므로 모든 타입들의 자료들을 저장 할 수 없다.
-    // - data 에는 List<boardDto> , List<replyDto> 등등 여러 타입들을 하나의 타입에서 저장한다.
-    private Object data; // 페이징된 자료
-
+// 출력할 정보(게시물/회원/제품 등) 들과 페이징 정보를 갖는 클래스
+@NoArgsConstructor @AllArgsConstructor
+@Getter @Setter @ToString
+public class PageDto {
+    // + DB 테이블이 없고 자바에서만 사용되는 DTO
+    private int totalCount;     // 1. 전체 자료 개수
+    private int currentPage;    // 2. 현재 페이지 번호
+    private int totalPage;      // 3. 전체 페이지수
+    private int startBtn;       // 4. 페이징버튼 시작번호;
+    private int endBtn;         // 5. 페이징버튼 끝번호;
+    private int perCount;       // 6. 1페이지당 보이는 자료수
+    private Object data;        // 7. 페이징된 자료들.
+    // **** Object 사용한 이유 : 정보/자료 호환성 ****
+    // 게시물정보 뿐만 아니라 여러 정보들을 저장하기 위해 슈퍼클래스
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

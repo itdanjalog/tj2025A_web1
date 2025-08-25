@@ -26,39 +26,56 @@ public class PostService {
         return postDao.write(postDto);
     }
 
-    // [2] 게시물 목록 조회 서비스 (페이징 처리)
-    public PageDto getPostList(int cno, int page) {
-        // --- 페이징 처리 로직 ---
-        // 1. 페이지당 표시할 게시물 수
-        int display = 5;
-        // 2. 페이지당 조회할 시작 인덱스 계산
-        int startRow = (page - 1) * display;
-        // 3. 카테고리별 전체 게시물 수 조회
-        int totalSize = postDao.getTotalSize(cno);
-        // 4. 전체 페이지 수 계산
-        int totalPage = (int) Math.ceil((double) totalSize / display);
-        // 5. 페이지 버튼 수
-        int btnSize = 5;
-        // 6. 시작 버튼 번호 계산
-        int startBtn = ((page - 1) / btnSize) * btnSize + 1;
-        // 7. 끝 버튼 번호 계산
-        int endBtn = startBtn + btnSize - 1;
-        if (endBtn > totalPage) {
-            endBtn = totalPage;
+    // [2] 게시물 전체조회 *페이징*
+    public PageDto findAllPost( int cno , int page , int count ,  String key, String keyword) {
+        // cno : 카테고리번호 , page : 현재페이지번호 , count : 페이지당 게시물수
+        // key : 검색할 필드명(예: title, content) , keyword : 검색어
+
+        // ******** 페이지별 조회할 시작 인덱스 계산 (로직 동일) *************
+        int startRow = (page - 1) * count;
+
+        // =================>>> 1. 검색 여부에 따라 분기 처리 ====================
+        List<PostDto> postList;
+        int totalCount;
+
+        // key와 keyword가 존재하고, 빈 문자열이 아닐 경우 '검색'으로 판단
+        if (key != null && !key.isEmpty() && keyword != null && !keyword.isEmpty()) {
+            // [검색이 있을 경우]
+            // 2. DAO에서 검색 조건에 맞는 게시물 총 개수 가져오기
+            totalCount = postDao.getTotalCountSearch(cno, key, keyword);
+            // 6. DAO에서 검색 조건에 맞는 게시물 리스트 가져오기 (페이징 처리)
+            postList = postDao.findAllSearch(cno, startRow, count, key, keyword);
+        } else {
+            // [검색이 없을 경우] - 기존 로직과 동일
+            // 2. DAO에서 카테고리별 게시물 총 개수 가져오기
+            totalCount = postDao.getTotalCount(cno);
+            // 6. DAO에서 카테고리별 게시물 리스트 가져오기 (페이징 처리)
+            postList = postDao.findAll(cno, startRow, count);
         }
+        // =================================================================
 
-        // DAO를 호출하여 해당 페이지의 게시물 목록을 가져옵니다.
-        List<PostDto> postList = postDao.findAll(cno, startRow, display);
+        // ******** 3. 전체 페이지수 구하기 (로직 동일) *************
+        int totalPage = (int) Math.ceil((double) totalCount / count);
 
-        // 페이징 관련 데이터를 PageDto에 담아 반환합니다.
-        return PageDto.builder()
-                .page(page)
-                .totalCount(totalSize)
-                .totalpage(totalPage)
-                .startbtn(startBtn)
-                .endbtn(endBtn)
-                .data(postList)
-                .build();
+        // ******** 4. 시작/끝 버튼 계산 (로직 동일) *************
+        int btnCount = 5;
+        int startBtn = ((page - 1) / btnCount) * btnCount + 1;
+        int endBtn = startBtn + btnCount - 1;
+        if (endBtn > totalPage) endBtn = totalPage;
+
+// ******** PageDto 구성하기 (Setter 방식) ***************
+        PageDto pageDto = new PageDto(); // 1. 기본 생성자로 객체 생성
+
+// 2. Setter 메소드를 이용해 각 필드에 값 할당
+        pageDto.setCurrentPage(page);
+        pageDto.setTotalPage(totalPage);
+        pageDto.setPerCount(count);
+        pageDto.setTotalCount(totalCount);
+        pageDto.setStartBtn(startBtn);
+        pageDto.setEndBtn(endBtn);
+        pageDto.setData(postList);
+
+        return pageDto;
     }
 
     // [3] 게시물 삭제 서비스
