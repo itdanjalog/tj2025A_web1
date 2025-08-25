@@ -67,6 +67,121 @@ public class PostDao extends Dao {
 
 
 
+    // [3-1] 검색된 게시물 수
+    public int getTotalCountSearch(int cno, String key, String keyword) {
+        try {
+            // 1. 기본 SQL 작성
+            String sql = "select count(*) from post where cno = ? ";
+
+            // 2. key 값에 따라 동적으로 SQL에 검색 조건 추가
+            if (key.equals("pcontent")) { // key가 'pcontent'이면
+                sql += " and pcontent like ? ";
+            } else if (key.equals("ptitle")) { // key가 'mno'(작성자)이면
+                // mno는 보통 숫자 타입이므로 다른 테이블과 JOIN하여 회원 아이디로 검색해야 할 수 있습니다.
+                // 여기서는 mno 필드에 직접 검색한다고 가정합니다.
+                sql += " and ptitle like ? ";
+            }
+            // ... 다른 검색 조건이 있다면 else if 로 추가 가능
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, cno);
+            ps.setString(2, "%" + keyword + "%"); // 3. keyword가 포함된 레코드를 찾기 위해 %% 추가
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    // [3-2] 검색된 전체 게시물 정보 조회
+    public List<PostDto> findAllSearch(int cno, int startRow, int count, String key, String keyword) {
+        System.out.println("PostDao.findAllSearch");
+        System.out.println("cno = " + cno + ", startRow = " + startRow + ", count = " + count + ", key = " + key + ", keyword = " + keyword);
+        List<PostDto> list = new ArrayList<>();
+        try {
+            // 1. 기본 SQL 작성
+            String sql = "select * from post p inner join member m on p.mno = m.mno where cno = ? ";
+
+            // 2. key 값에 따라 동적으로 SQL에 검색 조건 추가
+            if (key.equals("pcontent")) {
+                sql += " and pcontent like ? ";
+            } else if (key.equals("ptitle")) {
+                sql += " and ptitle like ? ";
+            }
+
+            // 3. 정렬 및 페이징 SQL 추가
+            sql += " order by pno desc limit ? , ? ";
+
+            System.out.println( sql );
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, cno);
+            ps.setString(2, "%" + keyword + "%"); // 4. keyword 값 설정
+            ps.setInt(3, startRow);               // 5. 페이징 시작 위치
+            ps.setInt(4, count);                  // 6. 페이지당 게시물 수
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                PostDto postDto = new PostDto();
+                postDto.setMno( rs.getInt("mno") );             postDto.setCno( rs.getInt("cno") );
+                postDto.setPcontent( rs.getString("pcontent")); postDto.setPdate( rs.getString("pdate") );
+                postDto.setPview( rs.getInt("pview") );         postDto.setPno( rs.getInt( "pno") );
+                postDto.setPtitle( rs.getString("ptitle"));
+                postDto.setMid( rs.getString( "mid" )); // member 테이블과 join한 결과 mid 호출 가능하다.
+                list.add( postDto );
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    // [5] 게시물 개별 조회
+    public PostDto findByPno(int pno) {
+        try {
+            String sql = "select * from post p "
+                    + " inner join member m on p.mno = m.mno "
+                    + " inner join category c on p.cno = c.cno "
+                    + " where pno = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, pno);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                PostDto postDto = new PostDto();
+                postDto.setMno( rs.getInt("mno") );             postDto.setCno( rs.getInt("cno") );
+                postDto.setPcontent( rs.getString("pcontent")); postDto.setPdate( rs.getString("pdate") );
+                postDto.setPview( rs.getInt("pview") );         postDto.setPno( rs.getInt( "pno") );
+                postDto.setPtitle( rs.getString("ptitle"));
+                postDto.setMid( rs.getString( "mid" )); // member 테이블과 join한 결과 mid 호출 가능하다.
+                return  postDto;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    /**
+     * [NEW] 게시물 조회수 1 증가
+     * @param pno 게시물 번호
+     */
+    public void incrementViewCount(int pno) {
+        try {
+            String sql = "update post set pview = pview + 1 where pno = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, pno);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+
+
+
 } // class end
 
 
