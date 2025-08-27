@@ -111,6 +111,23 @@ public class PostDao extends Dao {
         return list;
     }
 
+    // [3] 게시물 개별 정보 조회
+    public PostDto getPost( int pno ){
+        try{ String sql ="select * from post p inner join member m on p.mno = m.mno where pno = ? ";
+            PreparedStatement ps = conn.prepareStatement( sql );
+            ps.setInt( 1 , pno );
+            ResultSet rs = ps.executeQuery();
+            if( rs.next() ){
+                PostDto postDto = new PostDto();
+                postDto.setMno( rs.getInt("mno") );             postDto.setCno( rs.getInt( "cno" ));
+                postDto.setPcontent( rs.getString("pcontent")); postDto.setPdate( rs.getString("pdate"));
+                postDto.setPview( rs.getInt("pview"));          postDto.setPno( rs.getInt("pno"));
+                postDto.setPtitle( rs.getString("ptitle"));     postDto.setMid( rs.getString("mid") );
+                return postDto;
+            }
+        } catch (Exception e) { System.out.println(e); }
+        return null;
+    }
 } // class end
 
 

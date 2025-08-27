@@ -42,6 +42,13 @@ public class PostController {
         // 만약에 URL 주소상의 지정한 쿼리스트링 매개변수가 존재하는 조건이 필수가 아닐때 required = false 속성을 사용한다.
         return postService.findAllPost( cno , page , count , key , keyword );
     }
+
+    // [3] 게시물 개별 정보 조회
+    @GetMapping("/view")
+    public PostDto getPost( @RequestParam int pno ){
+        return postService.getPost( pno );
+    }
+
 } // class end
 
 

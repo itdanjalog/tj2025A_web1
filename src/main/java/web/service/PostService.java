@@ -67,6 +67,11 @@ public class PostService {
         return pageDto; // 반환
     }
 
+    // [3] 게시물 개별 정보 조회
+    public PostDto getPost( int pno ){
+        return postDao.getPost( pno );
+    }
+
 
 } // class end
 
