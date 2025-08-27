@@ -111,7 +111,7 @@ public class PostDao extends Dao {
         return list;
     }
 
-    // [3] 게시물 개별 정보 조회
+    // [3-1] 게시물 개별 정보 조회
     public PostDto getPost( int pno ){
         try{ String sql ="select * from post p inner join member m on p.mno = m.mno where pno = ? ";
             PreparedStatement ps = conn.prepareStatement( sql );
@@ -128,6 +128,40 @@ public class PostDao extends Dao {
         } catch (Exception e) { System.out.println(e); }
         return null;
     }
+
+    // [3-2] 게시물 조회수 1증가 + 업데이트
+    public void incrementView( int pno ){
+        try{ String sql = "update post set pview = pview + 1 where pno = ? ";
+            PreparedStatement ps = conn.prepareStatement( sql );
+            ps.setInt( 1 , pno );
+            ps.executeUpdate(); // void 라서 return 없다.
+        } catch (Exception e) { System.out.println(e); }
+    }
+
+    // [4]
+    public boolean deletePost( int pno ){
+        try{ String sql = "delete from post where pno = ?";
+            PreparedStatement ps = conn.prepareStatement( sql );
+            ps.setInt( 1 , pno );
+            return ps.executeUpdate() == 1 ;
+        } catch (Exception e) { System.out.println(e); }
+        return false;
+    }
+
+    // [5]
+    public int updatePost( PostDto postDto ){
+        try{ String sql = "update post set ptitle = ? , pcontent = ? , cno = ? where pno = ?";
+            PreparedStatement ps = conn.prepareStatement( sql );
+            ps.setString( 1 , postDto.getPtitle() );
+            ps.setString( 2 , postDto.getPcontent() );
+            ps.setInt( 3 , postDto.getCno() );
+            ps.setInt( 4 , postDto.getPno() );
+            int count = ps.executeUpdate();
+            if( count == 1 ){ return postDto.getPno(); }
+        } catch (Exception e) { System.out.println(e); }
+        return 0;
+    }
+
 } // class end
 
 

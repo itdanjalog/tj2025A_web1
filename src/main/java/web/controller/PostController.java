@@ -8,6 +8,10 @@ import web.model.dto.PageDto;
 import web.model.dto.PostDto;
 import web.service.PostService;
 
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController // (1) HTTP 요청/응답 자료 매핑 기술
 @RequestMapping("/post") // (2) HTTP URL 매핑 기술
 @RequiredArgsConstructor // (3) final 변수에 대한 자동 생성자 주입
@@ -45,8 +49,51 @@ public class PostController {
 
     // [3] 게시물 개별 정보 조회
     @GetMapping("/view")
-    public PostDto getPost( @RequestParam int pno ){
-        return postService.getPost( pno );
+    public PostDto getPost( @RequestParam int pno , HttpSession session ){
+        // HttpSession : 브라우저마다 별도의 (클라이언트)저장소 개념
+            // 1. 세션 속성내 'viewHistory'(클라이언트가 조회한 게시물정보 ) 값 가져오기
+        Object object = session.getAttribute("viewHistory");
+        Map<Integer,String> viewHistory;
+        if( object == null ){ // 2. 만약에 'viewHistory' 가 존재하지 않으면
+            viewHistory = new HashMap<>();
+        }else{ // 3. 존재하면 기존 자료를 타입변환 한다.
+            viewHistory = (Map< Integer , String >) object;
+        }
+            // 4. 오늘 날짜를 문자열로 가져옴 , LocalDate.now() : 현재 시스템 날짜 반환함수
+        String today = LocalDate.now().toString();
+            // 5. 현재 게시물(pno)을 오늘(today) 조합하여 본 기록을 체크한다. { 3 : 2025-08-06 , 4 : 2025-08-07 }
+        String check = viewHistory.get( pno );
+        if( check == null || !check.equals( today ) ){ // 만약에 현재게시물의 오늘날짜가 없거나 오늘날짜가 일치하지않으면
+            postService.incrementView( pno ); // 6. 조회수 증가 서비스 호출
+            // 7. 세션에 조회수 기록/저장
+            viewHistory.put( pno , today );
+            // 8. 세션 속성 업데이트
+            session.setAttribute( "viewHistory" , viewHistory );
+        }
+
+        // 2. 요청한 사람(클라이언트)이 본인이 작성한 글인지 확인
+        PostDto postDto = postService.getPost( pno );
+        // 로그인 세션 확인
+        Object loginObject = session.getAttribute("loginMno");
+        // 만약에 로그인정보가 없으면 0 있으면 타입변환
+        int loginMno = loginObject == null ? 0 : (int) loginObject;
+        // 만약에 조회한 게시물의 작성자 회원번호 가 로그인회원번호 와 같으면 host 속성을 true 설정
+        if( postDto.getMno() == loginMno ){ postDto.setHost( true ); }
+
+        return postDto;
+
+    } // func end
+
+    // [4]
+    @DeleteMapping("")
+    public boolean deletePost( @RequestParam int pno ){
+        return postService.deletePost( pno );
+    }
+
+    // [5]
+    @PutMapping("")
+    public int updatePost( @RequestBody PostDto postDto ){
+        return postService.updatePost( postDto );
     }
 
 } // class end
