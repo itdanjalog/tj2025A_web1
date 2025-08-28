@@ -8,6 +8,7 @@ import web.model.dto.PageDto;
 import web.model.dto.PostDto;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor // 롬복제공 : final 변수에 대한 ---(final)생성자 자동-- 제공
@@ -86,6 +87,17 @@ public class PostService {
     public int updatePost( PostDto postDto ){
         return postDao.updatePost( postDto );
     }
+
+    // [6]
+    public int writeReply(Map<String,String> reply ){
+        return postDao.writeReply( reply );
+    }
+
+    // [7]
+    public List< Map<String,String> > findAllReply( int pno ){
+        return postDao.findAllReply( pno );
+    }
+
 
 
 } // class end

@@ -10,6 +10,7 @@ import web.service.PostService;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController // (1) HTTP 요청/응답 자료 매핑 기술
@@ -96,7 +97,27 @@ public class PostController {
         return postService.updatePost( postDto );
     }
 
+    // [6]
+    @PostMapping("/reply")
+    public int writeReply( @RequestBody Map<String,String> reply , HttpSession session ){
+        // * 회원제 댓글 이라서 *세션* 내 로그인정보 가져오기
+        if( session.getAttribute("loginMno") == null ) return 0; // 비로그인이면 실패
+
+        int loginMno = (int)session.getAttribute("loginMno"); // 로그인중이면 세션에서 회원번호 조회
+        reply.put( "mno" ,  loginMno+""  ); // ?? +"" , 로그인된 회원번호를 map 추가
+
+        return postService.writeReply( reply );
+    }
+
+    // [7]
+    @GetMapping("/reply")
+    public List< Map<String,String> > findAllReply( @RequestParam int pno ){
+        return postService.findAllReply( pno );
+    }
+
 } // class end
+
+
 
 
 

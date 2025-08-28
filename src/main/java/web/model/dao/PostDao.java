@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class PostDao extends Dao {
@@ -160,6 +162,42 @@ public class PostDao extends Dao {
             if( count == 1 ){ return postDto.getPno(); }
         } catch (Exception e) { System.out.println(e); }
         return 0;
+    }
+
+    // [6]
+    public int writeReply( Map< String , String > reply ){
+        try{ String sql ="insert into reply( rcontent , mno , pno ) values( ? , ? , ? )";
+            PreparedStatement ps = conn.prepareStatement( sql , Statement.RETURN_GENERATED_KEYS );// PK값 반환 설정
+            ps.setString( 1 , reply.get( "rcontent") ); // { "속성명" : 속성값 , "속성명 : 속성값 }
+            ps.setString( 2 , reply.get( "mno" ) ); // map.get( "속성명") : 속성값 반환
+            ps.setString( 3 , reply.get( "pno" ) );
+            int count = ps.executeUpdate();
+            if( count == 1){
+                ResultSet rs = ps.getGeneratedKeys(); // insert 성공시 자동생성된 pk값들 반환
+                if( rs.next() ) return rs.getInt( 1 ); // pk값(댓글번호) 1개 반환
+            }
+        } catch (Exception e) { System.out.println(e); }
+        return 0;
+    }
+
+    // [7]
+    public List< Map<String,String> > findAllReply( int pno ){
+        List< Map<String,String> > list = new ArrayList<>();
+        try{ String sql ="select * from reply r inner join member m on r.mno = m.mno where pno=?";
+            PreparedStatement ps = conn.prepareStatement( sql );
+            ps.setInt( 1, pno );
+            ResultSet rs = ps.executeQuery();
+            while ( rs.next() ){
+                // { key : value , key : value , key : value }
+                Map<String,String> map = new HashMap<>();
+                map.put( "rcontent" , rs.getString("rcontent") );
+                map.put( "rdate" , rs.getString("rdate") );
+                map.put( "rno" , rs.getString("rno") );
+                map.put( "mid" , rs.getString("mid") );
+                list.add( map );
+            }
+        } catch (Exception e) { System.out.println(e); }
+        return list;
     }
 
 } // class end
